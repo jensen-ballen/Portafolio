@@ -136,10 +136,7 @@ let currentLanguage = localStorage.getItem('language') || 'es';
 let currentTheme = localStorage.getItem('theme') || 'light';
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar todas las funcionalidades
-    initTheme();
-    initLanguage();
-    initNavigation();
+    // Inicializar funcionalidades que no dependen de elementos dinámicos
     initScrollEffects();
     initSkillsAnimation();
     initContactForm();
@@ -160,17 +157,17 @@ document.addEventListener('DOMContentLoaded', function() {
 function initTheme() {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
-    
+
     // Aplicar tema guardado
     body.setAttribute('data-theme', currentTheme);
-    updateThemeIcon();
-    
+    updateThemeToggle();
+
     themeToggle?.addEventListener('click', () => {
         currentTheme = currentTheme === 'light' ? 'dark' : 'light';
         body.setAttribute('data-theme', currentTheme);
         localStorage.setItem('theme', currentTheme);
-        updateThemeIcon();
-        
+        updateThemeToggle();
+
         // Animación suave
         body.style.transition = 'all 0.3s ease';
         setTimeout(() => {
@@ -179,10 +176,14 @@ function initTheme() {
     });
 }
 
-function updateThemeIcon() {
-    const themeIcon = document.querySelector('#themeToggle i');
-    if (themeIcon) {
-        themeIcon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+function updateThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        if (currentTheme === 'dark') {
+            themeToggle.classList.add('active');
+        } else {
+            themeToggle.classList.remove('active');
+        }
     }
 }
 
@@ -426,49 +427,8 @@ function initSkillsAnimation() {
     }
 }
 
-// ================================
-// FORMULARIO DE CONTACTO
-// ================================
-function initContactForm() {
-    const contactForm = document.querySelector('.contact-form');
-    
-    contactForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        // Mostrar loading
-        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLanguage]['loading.sending']}`;
-        submitBtn.disabled = true;
-        
-        // Simular envío (aquí puedes integrar con tu backend)
-        try {
-            await simulateFormSubmission();
-            
-            // Éxito
-            showNotification(translations[currentLanguage]['notifications.messageSent'], 'success');
-            contactForm.reset();
-            
-        } catch (error) {
-            // Error
-            showNotification(translations[currentLanguage]['notifications.messageError'], 'error');
-        } finally {
-            // Restaurar botón
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1000);
-        }
-    });
-}
 
-// Simular envío de formulario
-function simulateFormSubmission() {
-    return new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-    });
-}
+
 
 // ================================
 // DESCARGA DE CV
@@ -798,68 +758,7 @@ function showNotification(message, type = 'info') {
 // UTILIDADES ADICIONALES
 // ================================
 
-// Lazy loading para imágenes
-function initLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
 
-// Preloader
-function initPreloader() {
-    const preloader = document.createElement('div');
-    preloader.className = 'preloader';
-    preloader.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10000;
-        transition: opacity 0.5s ease;
-    `;
-    
-    preloader.innerHTML = `
-        <div style="text-align: center; color: white;">
-            <div style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-            <h3>Cargando Portafolio...</h3>
-        </div>
-    `;
-    
-    document.body.appendChild(preloader);
-    
-    // Remover preloader cuando todo esté cargado
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                if (preloader.parentNode) {
-                    preloader.parentNode.removeChild(preloader);
-                }
-            }, 500);
-        }, 1000);
-    });
-}
-
-// Inicializar preloader inmediatamente
-if (document.readyState === 'loading') {
-    initPreloader();
-}
 
 // ================================
 // EASTER EGGS Y EFECTOS ESPECIALES
@@ -945,6 +844,85 @@ console.log('🚀 Portafolio de Jensen cargado correctamente!');
 console.log('💡 Tip: Prueba el código Konami (↑↑↓↓←→←→BA) para una sorpresa!');
 console.log('🌙 Cambia entre modo claro y oscuro con el botón del sol/luna');
 console.log('🌍 Cambia el idioma con el selector de idiomas (ES/EN/PT)');
+
+// ================================
+// MODAL QR
+// ================================
+function initQRModal() {
+    const modal = document.getElementById('qrModal');
+    const btn = document.getElementById('showQR');
+    const span = document.getElementsByClassName('close')[0];
+
+    btn?.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+
+    span?.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// ================================
+// NOTIFICACIÓN DE SALIDA
+// ================================
+function initExitNotification() {
+    window.addEventListener('beforeunload', (e) => {
+        const message = currentLanguage === 'es' ? '¿Ya te vas? ¡Espero verte pronto!' :
+                       currentLanguage === 'en' ? 'Leaving already? Hope to see you soon!' :
+                       'Já vai? Espero vê-lo em breve!';
+        e.returnValue = message;
+        return message;
+    });
+}
+
+// ================================
+// ACCESIBILIDAD - MODO ALTO CONTRASTE
+// ================================
+function initAccessibility() {
+    const accessibilityBtn = document.createElement('button');
+    accessibilityBtn.innerHTML = '<i class="fas fa-universal-access"></i>';
+    accessibilityBtn.className = 'btn-accessibility';
+    accessibilityBtn.title = 'Modo alto contraste';
+    accessibilityBtn.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: var(--shadow-medium);
+        transition: var(--transition);
+    `;
+
+    document.body.appendChild(accessibilityBtn);
+
+    accessibilityBtn.addEventListener('click', () => {
+        document.body.classList.toggle('high-contrast');
+        const isHighContrast = document.body.classList.contains('high-contrast');
+        showNotification(
+            isHighContrast ?
+                (currentLanguage === 'es' ? 'Modo alto contraste activado' :
+                 currentLanguage === 'en' ? 'High contrast mode activated' :
+                 'Modo alto contraste ativado') :
+                (currentLanguage === 'es' ? 'Modo alto contraste desactivado' :
+                 currentLanguage === 'en' ? 'High contrast mode deactivated' :
+                 'Modo alto contraste desativado'),
+            'success'
+        );
+    });
+}
+
 
 // ================================
 // MEDIDAS DE SEGURIDAD BÁSICAS
@@ -1076,7 +1054,7 @@ function initSecurityFeatures() {
 // ================================
 function initEmailJS() {
     // Configurar EmailJS con tu Service ID
-    emailjs.init('YOUR_PUBLIC_KEY'); // Reemplaza con tu Public Key de EmailJS
+    emailjs.init('02yI80fW8Y6NyiDZZ'); // Clave real configurada
 }
 
 // ================================
@@ -1219,8 +1197,8 @@ function initContactForm() {
         try {
             // Enviar email usando EmailJS
             await emailjs.send(
-                'YOUR_SERVICE_ID', // Reemplaza con tu Service ID
-                'YOUR_TEMPLATE_ID', // Reemplaza con tu Template ID
+                'service_default', // Service ID real
+                'template_vvgtrua', // Template ID real
                 formData
             );
 

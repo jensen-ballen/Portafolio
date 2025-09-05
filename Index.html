@@ -16,60 +16,23 @@
     <!-- Funcionarán cuando subas a GitHub Pages u otro hosting -->
 </head>
 <body>
-    <!-- Navegación -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Jensen</h2>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#inicio" class="nav-link" data-translate="nav.home">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#sobre-mi" class="nav-link" data-translate="nav.about">Sobre Mí</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#habilidades" class="nav-link" data-translate="nav.skills">Habilidades</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#proyectos" class="nav-link" data-translate="nav.projects">Proyectos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contacto" class="nav-link" data-translate="nav.contact">Contacto</a>
-                </li>
-            </ul>
-            <div class="nav-controls">
-                <!-- Control de Tema -->
-                <div class="theme-toggle" id="themeToggle" title="Cambiar tema">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <!-- Control de Idioma -->
-                <div class="language-selector">
-                    <button class="lang-btn" id="langBtn" title="Cambiar idioma">
-                        <i class="fas fa-globe"></i>
-                        <span id="currentLang">ES</span>
-                    </button>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <div class="lang-option" data-lang="es">
-                            <img src="https://flagcdn.com/w20/es.png" alt="Español"> Español
-                        </div>
-                        <div class="lang-option" data-lang="en">
-                            <img src="https://flagcdn.com/w20/us.png" alt="English"> English
-                        </div>
-                        <div class="lang-option" data-lang="pt">
-                            <img src="https://flagcdn.com/w20/br.png" alt="Português"> Português
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+    <!-- Navegación Modular -->
+    <div id="nav-container"></div>
+    <script>
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-container').innerHTML = data;
+                // Re-inicializar funciones que dependen de elementos dinámicos
+                initTheme();
+                initLanguage();
+                initNavigation();
+                // Inicializar nuevas funcionalidades
+                initQRModal();
+                initExitNotification();
+                initAccessibility();
+            });
+    </script>
 
     <!-- Sección Hero -->
     <section id="inicio" class="hero fade-in-up">
@@ -87,6 +50,10 @@
                         <button class="btn btn-primary" id="downloadCV">
                             <i class="fas fa-download"></i>
                             <span data-translate="hero.downloadCV">Descargar Hoja de Vida</span>
+                        </button>
+                        <button class="btn btn-secondary" id="showQR">
+                            <i class="fas fa-qrcode"></i>
+                            <span>Ver QR del CV</span>
                         </button>
                         <a href="#contacto" class="btn btn-secondary">
                             <i class="fas fa-envelope"></i>
@@ -153,18 +120,15 @@
             <div class="section-header">
                 <h2 class="section-title">Experiencia en mi formación laboral</h2>
                 <p class="section-subtitle">Mi trayectoria en el desarrollo de software en mis estudios</p>
+                <div class="timeline-date center">2023 -- 2025</div>
             </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2023 -- 2025</div>
-                    <div class="timeline-content">
-                        <h3>Desarrollador Junior con poca experiencia</h3>
-                        <p>SENA CLEM TULUÁ</p>
-                        <p>Me desempeñe como desarollador junior del sena con todo mi grupo de trabajo, mis compañeros y instructores que son profesionales capacitado para enseñarnos a progrmar lo que amo
-                            la tecnología donde participé en proyectos de desarrollo web utilizando tecnologías como HTML, CSS, JavaScript, MySQL, Java y entre otros.</p>
-                    </div>
-                </div>
+            <div class="timeline-content">
+                <h3>Desarrollador Junior con poca experiencia</h3>
+                <p>SENA CLEM TULUÁ</p>
+                <p>Me desempeñe como desarollador junior del sena con todo mi grupo de trabajo, mis compañeros y instructores que son profesionales capacitado para enseñarnos a progrmar lo que amo
+                    la tecnología donde participé en proyectos de desarrollo web utilizando tecnologías como HTML, CSS, JavaScript, MySQL, Java y entre otros.</p>
             </div>
+            
         </div>
     </section>
 
@@ -389,6 +353,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal QR -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>QR de mi Hoja de Vida</h2>
+            <p>Escanea este código QR para descargar mi CV directamente</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://ballen-jensen.netlify.app/hoja%20de%20jensen.pdf" alt="QR CV" style="display: block; margin: 0 auto;">
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="Js/portafolio.js"></script>
