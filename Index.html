@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jensen - Portafolio Profesional</title>
+    <link rel="stylesheet" href="Css/Style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- Medidas de Seguridad Básicas (compatibles con localhost) -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="referrer" content="no-referrer">
+    <!-- Nota: X-Frame-Options y X-Content-Type-Options requieren servidor web -->
+    <!-- Funcionarán cuando subas a GitHub Pages u otro hosting -->
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Jensen</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#inicio" class="nav-link" data-translate="nav.home">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#sobre-mi" class="nav-link" data-translate="nav.about">Sobre Mí</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#habilidades" class="nav-link" data-translate="nav.skills">Habilidades</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#proyectos" class="nav-link" data-translate="nav.projects">Proyectos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contacto" class="nav-link" data-translate="nav.contact">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-controls">
+                <!-- Control de Tema -->
+                <div class="theme-toggle" id="themeToggle" title="Cambiar tema">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <!-- Control de Idioma -->
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn" title="Cambiar idioma">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">ES</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <div class="lang-option" data-lang="es">
+                            <img src="https://flagcdn.com/w20/es.png" alt="Español"> Español
+                        </div>
+                        <div class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/us.png" alt="English"> English
+                        </div>
+                        <div class="lang-option" data-lang="pt">
+                            <img src="https://flagcdn.com/w20/br.png" alt="Português"> Português
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero fade-in-up">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span data-translate="hero.greeting">Hola, soy</span> <span class="highlight">Jensen</span>
+                    </h1>
+                    <p class="hero-subtitle" data-translate="hero.subtitle">Desarrollador Full Stack & Diseñador Web</p>
+                    <p class="hero-description" data-translate="hero.description">
+                        Apasionado por crear experiencias digitales excepcionales y soluciones tecnológicas innovadoras.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="downloadCV">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="hero.downloadCV">Descargar Hoja de Vida</span>
+                        </button>
+                        <a href="#contacto" class="btn btn-secondary">
+                            <i class="fas fa-envelope"></i>
+                            <span data-translate="hero.contact">Contactar</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-container protected-image">
+                        <img src="Img/foto de jensen.jpeg" alt="Jensen" id="profileImage">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <a href="#sobre-mi">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="sobre-mi" class="about fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Sobre Mí</h2>
+                <p class="section-subtitle">Conoce más sobre mi trayectoria profesional</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 data-translate="about.story">Mi Historia</h3>
+                    <p data-translate="about.description">
+                        Soy un profesional junior apasionado por la tecnología y el desarrollo de software. 
+                        Con experiencia en múltiples tecnologías y un enfoque constante en la innovación.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h4>1+</h4>
+                            <p data-translate="about.experience">Años de Experiencia</p>
+                        </div>
+                        <div class="stat">
+                            <h4>6</h4>
+                            <p data-translate="about.projects">Proyectos Completados</p>
+                        </div>
+                        <div class="stat">
+                            <h4>97%</h4>
+                            <p data-translate="about.satisfaction">Satisfacción</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-img-container">
+                        <img src="Img/historia.jpg" alt="Workspace">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Timeline de Experiencia -->
+    <section id="experiencia" class="experience fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experiencia en mi formación laboral</h2>
+                <p class="section-subtitle">Mi trayectoria en el desarrollo de software en mis estudios</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2023 -- 2025</div>
+                    <div class="timeline-content">
+                        <h3>Desarrollador Junior con poca experiencia</h3>
+                        <p>SENA CLEM TULUÁ</p>
+                        <p>Me desempeñe como desarollador junior del sena con todo mi grupo de trabajo, mis compañeros y instructores que son profesionales capacitado para enseñarnos a progrmar lo que amo
+                            la tecnología donde participé en proyectos de desarrollo web utilizando tecnologías como HTML, CSS, JavaScript, MySQL, Java y entre otros.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section id="habilidades" class="skills fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Habilidades</h2>
+                <p class="section-subtitle">Tecnologías y herramientas que domino</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card tooltip">
+                    <div class="skill-icon">
+                        <i class="fab fa-php"></i>
+                    </div>
+                    <h3>PHP</h3>
+                    <p>Desarrollo backend, APIs REST, MVC, Laravel</p>
+                    <span class="tooltip-text">Especializado en desarrollo de aplicaciones web robustas con PHP y frameworks modernos</span>
+                    <div class="skill-progress">
+                        <div class="progress-bar" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-card tooltip">
+                    <div class="skill-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3>Python</h3>
+                    <p>Algoritmos, Data Science, Automatización</p>
+                    <span class="tooltip-text">Experiencia en desarrollo de algoritmos avanzados y procesamiento de datos</span>
+                    <div class="skill-progress">
+                        <div class="progress-bar" data-width="80%"></div>
+                    </div>
+                </div>
+                <div class="skill-card tooltip">
+                    <div class="skill-icon">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <h3>Java</h3>
+                    <p>Aplicaciones de escritorio, JDBC, Swing</p>
+                    <span class="tooltip-text">Desarrollo de aplicaciones empresariales y sistemas de gestión con Java</span>
+                    <div class="skill-progress">
+                        <div class="progress-bar" data-width="75%"></div>
+                    </div>
+                </div>
+                <div class="skill-card tooltip">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Base de Datos</h3>
+                    <p>MySQL, SQL Server, Diseño de BD</p>
+                    <span class="tooltip-text">Diseño y optimización de bases de datos relacionales para aplicaciones empresariales</span>
+                    <div class="skill-progress">
+                        <div class="progress-bar" data-width="80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="proyectos" class="projects fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Proyectos Destacados</h2>
+                <p class="section-subtitle">Algunos de mis participaciones más recientes</p>
+            </div>
+
+            <!-- Toggle de Vista -->
+            <div class="view-toggle">
+                <button class="view-btn active" id="gridView">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" id="listView">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+
+            <!-- Filtros de Proyectos -->
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="php">PHP</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="java">Java</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card" data-category="php web">
+                    <div class="project-image">
+                        <img src="Img/hermes.png" alt="Hermes Beta">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/jensen-ballen/hermesbeta" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Hermes Beta</h3>
+                        <p>Sistema de gestión integral desarrollado en PHP. Proyecto de estudio del año pasado que demuestra habilidades en desarrollo backend y arquitectura de software.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="python">
+                    <div class="project-image">
+                        <img src="Img/WOA2.jpg" alt="WOA2">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/jensen-ballen/WOA2" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>WOA2</h3>
+                        <p>Aplicación desarrollada en Python durante el año pasado. Proyecto académico que explora algoritmos avanzados y procesamiento de datos.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Algoritmos</span>
+                            <span class="tech-tag">Data Science</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="java">
+                    <div class="project-image">
+                        <img src="Img/ferreteria.png" alt="Ferreteria XP">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/Toizomo/Ferreteria-XP-Team1" target="_blank" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Ferreteria XP</h3>
+                        <p>Sistema de gestión para ferretería desarrollado en Java este año. Proyecto colaborativo que implementa arquitectura de software empresarial y bases de datos.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">Swing</span>
+                            <span class="tech-tag">JDBC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="contact fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contacto</h2>
+                <p class="section-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 data-translate="contact.email">Email</h3>
+                            <p class="sensitive-info">jensenbanguera@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 data-translate="contact.phone">Teléfono</h3>
+                            <p class="sensitive-info">+57 311 500 9832</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3 data-translate="contact.location">Ubicación</h3>
+                            <p>Colombia, Valle del Cauca</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/jensen-ballen-banguera-323bb3349" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/jensen-ballen" target="_blank" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://x.com/Jensenbanguera" target="_blank" class="social-link" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/jensenballen/" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Tu Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Tu Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Asunto" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Tu Mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-translate="contact.send">Enviar Mensaje</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p style="color: white;">&copy; 2024 Jensen. <span data-translate="footer.rights">Todos los derechos reservados.</span></p>
+                <p style="color: white;"><span data-translate="footer.made">Hecho con</span> <i class="fas fa-heart"></i> <span data-translate="footer.coffee">y mucho café</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="Js/portafolio.js"></script>
+</body>
+</html>
