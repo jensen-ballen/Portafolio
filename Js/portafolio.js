@@ -30,20 +30,13 @@ const translations = {
         'contact.email': 'Email',
         'contact.phone': 'Teléfono',
         'contact.location': 'Ubicación',
-        'contact.name': 'Tu Nombre',
-        'contact.subject': 'Asunto',
-        'contact.message': 'Tu Mensaje',
-        'contact.send': 'Enviar Mensaje',
         'footer.rights': 'Todos los derechos reservados.',
         'footer.made': 'Hecho con',
         'footer.coffee': 'y mucho café',
         'notifications.cvDownloaded': '¡CV descargado correctamente!',
         'notifications.cvError': 'Error al descargar el CV. Inténtalo de nuevo.',
-        'notifications.messageSent': '¡Mensaje enviado correctamente!',
-        'notifications.messageError': 'Error al enviar el mensaje. Inténtalo de nuevo.',
         'notifications.imageUpdated': '¡Imagen actualizada correctamente!',
-        'loading.downloading': 'Descargando...',
-        'loading.sending': 'Enviando...'
+        'loading.downloading': 'Descargando...'
     },
     en: {
         'nav.home': 'Home',
@@ -72,20 +65,13 @@ const translations = {
         'contact.email': 'Email',
         'contact.phone': 'Phone',
         'contact.location': 'Location',
-        'contact.name': 'Your Name',
-        'contact.subject': 'Subject',
-        'contact.message': 'Your Message',
-        'contact.send': 'Send Message',
         'footer.rights': 'All rights reserved.',
         'footer.made': 'Made with',
         'footer.coffee': 'and lots of coffee',
         'notifications.cvDownloaded': 'CV downloaded successfully!',
         'notifications.cvError': 'Error downloading CV. Please try again.',
-        'notifications.messageSent': 'Message sent successfully!',
-        'notifications.messageError': 'Error sending message. Please try again.',
         'notifications.imageUpdated': 'Image updated successfully!',
-        'loading.downloading': 'Downloading...',
-        'loading.sending': 'Sending...'
+        'loading.downloading': 'Downloading...'
     },
     pt: {
         'nav.home': 'Início',
@@ -114,20 +100,13 @@ const translations = {
         'contact.email': 'Email',
         'contact.phone': 'Telefone',
         'contact.location': 'Localização',
-        'contact.name': 'Seu Nome',
-        'contact.subject': 'Assunto',
-        'contact.message': 'Sua Mensagem',
-        'contact.send': 'Enviar Mensagem',
         'footer.rights': 'Todos os direitos reservados.',
         'footer.made': 'Feito com',
         'footer.coffee': 'e muito café',
         'notifications.cvDownloaded': 'CV baixado com sucesso!',
         'notifications.cvError': 'Erro ao baixar o CV. Tente novamente.',
-        'notifications.messageSent': 'Mensagem enviada com sucesso!',
-        'notifications.messageError': 'Erro ao enviar mensagem. Tente novamente.',
         'notifications.imageUpdated': 'Imagem atualizada com sucesso!',
-        'loading.downloading': 'Baixando...',
-        'loading.sending': 'Enviando...'
+        'loading.downloading': 'Baixando...'
     }
 };
 
@@ -139,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar funcionalidades que no dependen de elementos dinámicos
     initScrollEffects();
     initSkillsAnimation();
-    initContactForm();
     initDownloadCV();
     initImageUpload();
     initTypingEffect();
@@ -147,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initProjectFilters();
     initViewToggle();
     initAdvancedAnimations();
-    initEmailJS();
     initSecurityFeatures();
 });
 
@@ -243,24 +220,11 @@ function updateLanguage(lang) {
         }
     });
     
-    // Actualizar placeholders
-    updatePlaceholders(lang);
     
     // Actualizar títulos dinámicos
     updateDynamicContent(lang);
 }
 
-function updatePlaceholders(lang) {
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const subjectInput = document.getElementById('subject');
-    const messageTextarea = document.getElementById('message');
-    
-    if (nameInput) nameInput.placeholder = translations[lang]['contact.name'];
-    if (emailInput) emailInput.placeholder = translations[lang]['contact.email'];
-    if (subjectInput) subjectInput.placeholder = translations[lang]['contact.subject'];
-    if (messageTextarea) messageTextarea.placeholder = translations[lang]['contact.message'];
-}
 
 function updateDynamicContent(lang) {
     // Actualizar títulos de secciones que no tienen data-translate
@@ -1049,13 +1013,6 @@ function initSecurityFeatures() {
     console.log('🛡️ Protección básica implementada');
 }
 
-// ================================
-// EMAILJS CONFIGURATION
-// ================================
-function initEmailJS() {
-    // Configurar EmailJS con tu Service ID
-    emailjs.init('02yI80fW8Y6NyiDZZ'); // Clave real configurada
-}
 
 // ================================
 // FILTROS DE PROYECTOS
@@ -1167,55 +1124,4 @@ function initAdvancedAnimations() {
     if (aboutSection) {
         observer.observe(aboutSection);
     }
-}
-
-// ================================
-// FORMULARIO DE CONTACTO FUNCIONAL
-// ================================
-function initContactForm() {
-    const contactForm = document.querySelector('.contact-form');
-
-    contactForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-
-        // Mostrar loading
-        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${translations[currentLanguage]['loading.sending']}`;
-        submitBtn.disabled = true;
-
-        // Recopilar datos del formulario
-        const formData = {
-            from_name: document.getElementById('name').value,
-            from_email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value,
-            to_name: 'Jensen'
-        };
-
-        try {
-            // Enviar email usando EmailJS
-            await emailjs.send(
-                'service_default', // Service ID real
-                'template_vvgtrua', // Template ID real
-                formData
-            );
-
-            // Éxito
-            showNotification(translations[currentLanguage]['notifications.messageSent'], 'success');
-            contactForm.reset();
-
-        } catch (error) {
-            console.error('Error sending email:', error);
-            // Error
-            showNotification(translations[currentLanguage]['notifications.messageError'], 'error');
-        } finally {
-            // Restaurar botón
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1000);
-        }
-    });
 }
