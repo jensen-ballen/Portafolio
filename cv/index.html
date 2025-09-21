@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jensen - Portafolio Profesional</title>
+
+    <!-- Fuentes y Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Librerías de Música -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <!-- Medidas de Seguridad Básicas -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="referrer" content="no-referrer">
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --bg-card: rgba(255, 255, 255, 0.05);
+
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --border: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.2);
+
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+            --radius: 16px;
+            --radius-sm: 8px;
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Música Background */
+        .music-bg {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .music-toggle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .music-toggle.playing {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Navegación Moderna */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Game Preview Modal */
+        .game-preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-preview-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .preview-game {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .preview-game:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-hover);
+        }
+
+        .preview-game-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-game-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Contenido Principal */
+        .main {
+            padding-top: 100px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Secciones */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section Moderna */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Botones Modernos */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        /* Cards Modernas */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Grid Moderno */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* Skills Cards */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Project Cards */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .contact-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer Moderno */
+        .footer {
+            background: var(--bg-tertiary);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .music-bg {
+                top: 10px;
+                right: 10px;
+            }
+
+            .music-toggle {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* Partículas de Fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { animation-delay: 0s; }
+        .particle:nth-child(2) { animation-delay: 1s; }
+        .particle:nth-child(3) { animation-delay: 2s; }
+        .particle:nth-child(4) { animation-delay: 3s; }
+        .particle:nth-child(5) { animation-delay: 4s; }
+        .particle:nth-child(6) { animation-delay: 5s; }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Modal QR */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal .close:hover {
+            color: var(--error);
+        }
+
+        /* Estilos heredados del portafolio original */
+        .hero-container, .about-content, .timeline-content, .contact-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .timeline-date {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Música Background -->
+    <div class="music-bg">
+        <button class="music-toggle" id="musicToggle" title="Activar/Desactivar Música">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <!-- Navegación Moderna -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">Jensen</div>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
+                <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+                <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+                <li><a href="#juegos" class="nav-link">Juegos</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-container').innerHTML = data;
+                // Re-inicializar funciones que dependen de elementos dinámicos
+                initTheme();
+                initLanguage();
+                initNavigation();
+                // Inicializar nuevas funcionalidades
+                initQRModal();
+                initExitNotification();
+                initAccessibility();
+            });
+    </script>
+
+    <!-- Sección Hero Moderna -->
+    <main class="main">
+        <section id="inicio" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            Hola, soy <span>Jensen</span>
+                        </h1>
+                        <p class="hero-subtitle">Desarrollador Full Stack & Diseñador Web</p>
+                        <p class="hero-description">
+                            Apasionado por crear experiencias digitales excepcionales y soluciones tecnológicas innovadoras.
+                            Me especializo en desarrollo web moderno con las últimas tecnologías.
+                        </p>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-primary" id="downloadCV">
+                                <i class="fas fa-download"></i>
+                                Descargar CV
+                            </button>
+                            <button class="btn btn-secondary" id="showQR">
+                                <i class="fas fa-qrcode"></i>
+                                Ver QR del CV
+                            </button>
+                            <a href="#contacto" class="btn btn-secondary">
+                                <i class="fas fa-envelope"></i>
+                                Contactar
+                            </a>
+                            <a href="../game/juego.html" class="btn btn-secondary">
+                                <i class="fas fa-gamepad"></i>
+                                Ver Juegos
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="../Img/foto de jensen.jpeg" alt="Jensen" class="profile-image" id="profileImage">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Mí -->
+        <section id="sobre-mi" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Sobre Mí</h2>
+                    <p class="section-subtitle">Conoce más sobre mi trayectoria profesional</p>
+                </div>
+
+                <div class="grid">
+                    <div class="card fade-in">
+                        <h3 class="card-title">Mi Historia</h3>
+                        <p class="card-description">
+                            Soy un profesional apasionado por la tecnología y el desarrollo de software.
+                            Con experiencia en múltiples tecnologías y un enfoque constante en la innovación,
+                            me dedico a crear soluciones que marquen la diferencia.
+                        </p>
+                    </div>
+
+                    <div class="card fade-in">
+                        <h3 class="card-title">Estadísticas</h3>
+                        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">1+</div>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Años de Experiencia</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">6</div>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Proyectos Completados</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent);">97%</div>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Satisfacción</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Experiencia -->
+        <section id="experiencia" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Experiencia</h2>
+                    <p class="section-subtitle">Mi trayectoria en el desarrollo de software</p>
+                </div>
+
+                <div class="card fade-in" style="max-width: 800px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <span class="timeline-date">2023 -- 2025</span>
+                    </div>
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">Desarrollador Junior</h3>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">SENA CLEM TULUÁ</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Me desempeñé como desarrollador junior del SENA con todo mi grupo de trabajo,
+                        mis compañeros y instructores que son profesionales capacitados para enseñarnos
+                        a programar lo que amo: la tecnología. Participé en proyectos de desarrollo web
+                        utilizando tecnologías como HTML, CSS, JavaScript, MySQL, Java y muchos otros.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Habilidades -->
+        <section id="habilidades" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Habilidades</h2>
+                    <p class="section-subtitle">Tecnologías y herramientas que domino</p>
+                </div>
+
+                <div class="skills-grid">
+                    <div class="skill-card fade-in">
+                        <i class="fab fa-php skill-icon"></i>
+                        <h3 class="skill-name">PHP</h3>
+                        <p class="skill-description">Desarrollo backend, APIs REST, MVC, Laravel</p>
+                    </div>
+
+                    <div class="skill-card fade-in">
+                        <i class="fab fa-python skill-icon"></i>
+                        <h3 class="skill-name">Python</h3>
+                        <p class="skill-description">Algoritmos, Data Science, Automatización</p>
+                    </div>
+
+                    <div class="skill-card fade-in">
+                        <i class="fab fa-java skill-icon"></i>
+                        <h3 class="skill-name">Java</h3>
+                        <p class="skill-description">Aplicaciones de escritorio, JDBC, Swing</p>
+                    </div>
+
+                    <div class="skill-card fade-in">
+                        <i class="fas fa-database skill-icon"></i>
+                        <h3 class="skill-name">Base de Datos</h3>
+                        <p class="skill-description">MySQL, SQL Server, Diseño de BD</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Proyectos -->
+        <section id="proyectos" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Proyectos Destacados</h2>
+                    <p class="section-subtitle">Algunos de mis trabajos más recientes</p>
+                </div>
+
+                <div class="grid">
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Sistema de Gestión</h3>
+                            <p class="project-description">
+                                Sistema integral desarrollado en PHP con MySQL para gestión empresarial.
+                                Proyecto académico que demuestra habilidades en desarrollo backend.
+                            </p>
+                            <div style="margin-top: 1rem;">
+                                <a href="https://github.com/jensen-ballen/hermesbeta" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+                                    <i class="fab fa-github"></i> Ver Código
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Aplicación Python</h3>
+                            <p class="project-description">
+                                Desarrollo de algoritmos avanzados y procesamiento de datos.
+                                Proyecto que explora el potencial de Python en ciencia de datos.
+                            </p>
+                            <div style="margin-top: 1rem;">
+                                <a href="https://github.com/jensen-ballen/WOA2" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+                                    <i class="fab fa-github"></i> Ver Código
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Sistema Ferretería</h3>
+                            <p class="project-description">
+                                Aplicación Java con interfaz Swing para gestión de inventario.
+                                Proyecto colaborativo con arquitectura de software empresarial.
+                            </p>
+                            <div style="margin-top: 1rem;">
+                                <a href="https://github.com/Toizomo/Ferreteria-XP-Team1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+                                    <i class="fab fa-github"></i> Ver Código
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Juegos -->
+        <section id="juegos" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🎮 Juegos Interactivos</h2>
+                    <p class="section-subtitle">¡Descubre mi colección de juegos desarrollados con JavaScript puro!</p>
+                </div>
+
+                <div class="card fade-in" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">
+                        <i class="fas fa-gamepad" style="color: var(--primary);"></i>
+                    </div>
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">GameHub</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">
+                        He creado una colección de 8 juegos interactivos completamente funcionales
+                        usando JavaScript puro. Desde el clásico Snake hasta juegos de memoria,
+                        pong y más. ¡Ven y diviértete mientras ves mis habilidades de desarrollo!
+                    </p>
+
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="game/juego.html" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            Jugar Ahora
+                        </a>
+                        <button class="btn btn-secondary" onclick="showGamePreview()">
+                            <i class="fas fa-eye"></i>
+                            Ver Preview
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding: 1rem; background: var(--bg-card); border-radius: var(--radius);">
+                        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">8</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Juegos</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">100%</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">JavaScript</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">∞</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Diversión</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Contacto</h2>
+                    <p class="section-subtitle">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div>
+                        <div class="contact-item fade-in">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <p>jensenbanguera@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item fade-in">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <div class="contact-details">
+                                <h3>Teléfono</h3>
+                                <p>+57 311 500 9832</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="contact-item fade-in">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <div class="contact-details">
+                                <h3>Ubicación</h3>
+                                <p>Colombia, Valle del Cauca</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item fade-in">
+                            <i class="fas fa-globe contact-icon"></i>
+                            <div class="contact-details">
+                                <h3>Redes Sociales</h3>
+                                <p>Conéctate conmigo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/jensen-ballen-banguera-323bb3349" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/jensen-ballen" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://x.com/Jensenbanguera" target="_blank" rel="noopener noreferrer" class="social-link" title="X (Twitter)">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/jensenballen/" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Moderno -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Jensen. Todos los derechos reservados.</p>
+                <p>Hecho con <i class="fas fa-heart" style="color: var(--secondary);"></i> y mucho café</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Game Preview Modal -->
+    <div id="gamePreviewModal" class="game-preview-modal">
+        <div class="preview-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                <h2 style="color: var(--primary); margin: 0;">🎮 Preview de Juegos</h2>
+                <button onclick="closeGamePreview()" style="background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer;">&times;</button>
+            </div>
+
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
+                ¡Descubre la colección completa de juegos que he desarrollado!
+            </p>
+
+            <div class="preview-grid">
+                <div class="preview-game">
+                    <i class="fas fa-dragon preview-game-icon"></i>
+                    <div class="preview-game-name">Snake</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-cubes preview-game-icon"></i>
+                    <div class="preview-game-name">Tetris</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-table-tennis-paddle-ball preview-game-icon"></i>
+                    <div class="preview-game-name">Pong</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-brain preview-game-icon"></i>
+                    <div class="preview-game-name">Memoria</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-hashtag preview-game-icon"></i>
+                    <div class="preview-game-name">Tres en Raya</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-circle-dot preview-game-icon"></i>
+                    <div class="preview-game-name">Breakout</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-person-running preview-game-icon"></i>
+                    <div class="preview-game-name">Platformer</div>
+                </div>
+                <div class="preview-game">
+                    <i class="fas fa-question-circle preview-game-icon"></i>
+                    <div class="preview-game-name">Quiz</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="../game/juego.html" class="btn btn-primary" onclick="closeGamePreview()">
+                    <i class="fas fa-gamepad"></i>
+                    Ir a GameHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partículas de Fondo -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Modal QR -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>QR de mi Hoja de Vida</h2>
+            <p>Escanea este código QR para descargar mi CV directamente</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://ballen-jensen.netlify.app/hoja%20de%20jensen.pdf" alt="QR CV" style="display: block; margin: 0 auto;">
+        </div>
+    </div>
+
+    <!-- Scripts Modernos -->
+    <script>
+        // Sistema de Música con Tone.js
+        class MusicSystem {
+            constructor() {
+                this.isPlaying = false;
+                this.synth = null;
+                this.sequence = null;
+                this.init();
+            }
+
+            async init() {
+                document.addEventListener('click', () => {
+                    if (!this.synth) {
+                        this.setupAudio();
+                    }
+                }, { once: true });
+            }
+
+            setupAudio() {
+                this.synth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.1, decay: 0.2, sustain: 0.8, release: 1 }
+                }).toDestination();
+
+                const notes = ['C4', 'E4', 'G4', 'A4', 'C5', 'A4', 'G4', 'E4'];
+                this.sequence = new Tone.Sequence((time, note) => {
+                    this.synth.triggerAttackRelease(note, '8n', time);
+                }, notes, '4n');
+
+                console.log('🎵 Sistema de música inicializado');
+            }
+
+            play() {
+                if (!this.synth) return;
+                if (!this.isPlaying) {
+                    Tone.start();
+                    this.sequence.start();
+                    Tone.Transport.start();
+                    this.isPlaying = true;
+                    console.log('🎵 Música iniciada');
+                }
+            }
+
+            stop() {
+                if (this.sequence && this.isPlaying) {
+                    this.sequence.stop();
+                    Tone.Transport.stop();
+                    this.isPlaying = false;
+                    console.log('🎵 Música detenida');
+                }
+            }
+
+            toggle() {
+                if (this.isPlaying) {
+                    this.stop();
+                } else {
+                    this.play();
+                }
+            }
+        }
+
+        const musicSystem = new MusicSystem();
+
+        // Control de música
+        document.getElementById('musicToggle').addEventListener('click', () => {
+            const button = document.getElementById('musicToggle');
+            musicSystem.toggle();
+
+            if (musicSystem.isPlaying) {
+                button.innerHTML = '<i class="fas fa-pause"></i>';
+                button.classList.add('playing');
+                button.title = 'Pausar Música';
+            } else {
+                button.innerHTML = '<i class="fas fa-music"></i>';
+                button.classList.remove('playing');
+                button.title = 'Reproducir Música';
+            }
+        });
+
+        // Funcionalidades del portafolio original
+        function downloadCV() {
+            const link = document.createElement('a');
+            link.href = '../hoja de jensen.pdf';
+            link.download = 'Jensen_CV.pdf';
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showNotification('¡CV descargado correctamente!', 'success');
+        }
+
+        // Sistema de notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                font-weight: 500;
+            `;
+
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Modal QR
+        document.getElementById('showQR').addEventListener('click', () => {
+            const modal = document.querySelector('.modal');
+            modal.classList.add('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal') || e.target.classList.contains('close')) {
+                document.querySelector('.modal').classList.remove('active');
+            }
+        });
+
+        // Navegación smooth scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const navbarHeight = 100;
+                        const y = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                }
+
+                // Actualizar navegación activa
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Crear partículas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    width: ${Math.random() * 6 + 2}px;
+                    height: ${Math.random() * 6 + 2}px;
+                    animation-duration: ${Math.random() * 4 + 4}s;
+                    animation-delay: ${Math.random() * 6}s;
+                    opacity: ${Math.random() * 0.5 + 0.2};
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+
+            setTimeout(() => {
+                showNotification('¡Bienvenido a mi portafolio moderno!', 'success');
+            }, 1000);
+        });
+
+        // Funciones de preview de juegos
+        function showGamePreview() {
+            document.getElementById('gamePreviewModal').classList.add('active');
+        }
+
+        function closeGamePreview() {
+            document.getElementById('gamePreviewModal').classList.remove('active');
+        }
+
+        // Efectos de scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+
+            const particles = document.getElementById('particles');
+            if (particles) {
+                particles.style.transform = `translateY(${rate}px)`;
+            }
+        }, { passive: true });
+
+        // ===== MEDIDAS DE SEGURIDAD AVANZADAS =====
+
+        // Bloquear inspector y herramientas de desarrollo
+        (function() {
+            'use strict';
+
+            // Detectar apertura de DevTools
+            let devtoolsOpen = false;
+            const threshold = 160;
+
+            const detectDevTools = () => {
+                if (window.outerHeight - window.innerHeight > threshold ||
+                    window.outerWidth - window.innerWidth > threshold) {
+                    if (!devtoolsOpen) {
+                        devtoolsOpen = true;
+                        // Bloquear la página completamente
+                        document.body.innerHTML = `
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background: #000; color: #fff; font-family: Arial, sans-serif; text-align: center;">
+                                <div>
+                                    <h1 style="color: #ff4444;">🚫 Acceso Denegado</h1>
+                                    <p>Las herramientas de desarrollo han sido detectadas.</p>
+                                    <p>Esta página está protegida contra inspección.</p>
+                                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #444; border: none; color: white; cursor: pointer;">Recargar Página</button>
+                                </div>
+                            </div>
+                        `;
+                        // Deshabilitar todas las funciones
+                        window.location.href = 'about:blank';
+                    }
+                } else {
+                    devtoolsOpen = false;
+                }
+            };
+
+            // Verificar cada 500ms
+            setInterval(detectDevTools, 500);
+
+            // Bloquear atajos de teclado para DevTools
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.keyCode === 123) {
+                    e.preventDefault();
+                    showNotification('Inspector bloqueado por seguridad', 'error');
+                    return false;
+                }
+
+                // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
+                if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) ||
+                    (e.ctrlKey && e.keyCode === 85)) {
+                    e.preventDefault();
+                    showNotification('Acceso denegado por seguridad', 'error');
+                    return false;
+                }
+
+                // Ctrl+S (guardar página)
+                if (e.ctrlKey && e.keyCode === 83) {
+                    e.preventDefault();
+                    showNotification('Guardar página bloqueado', 'error');
+                    return false;
+                }
+            });
+
+            // Bloquear clic derecho
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showNotification('Menú contextual bloqueado por seguridad', 'warning');
+                return false;
+            });
+
+            // Bloquear selección de texto sensible
+            document.addEventListener('selectstart', function(e) {
+                const target = e.target;
+                if (target.classList.contains('sensitive-info') ||
+                    target.tagName === 'P' && target.innerText.includes('@')) {
+                    e.preventDefault();
+                    showNotification('Información sensible protegida', 'info');
+                    return false;
+                }
+            });
+
+            // Bloquear copiar información sensible
+            document.addEventListener('copy', function(e) {
+                const selectedText = window.getSelection().toString();
+                if (selectedText.includes('@') || selectedText.includes('jensen') ||
+                    selectedText.includes('+57') || selectedText.includes('gmail')) {
+                    e.preventDefault();
+                    showNotification('Información de contacto protegida', 'info');
+                    return false;
+                }
+            });
+
+            // Anti-debugging: detectar debugger
+            let antiDebug = function() {
+                let start = new Date();
+                debugger;
+                let end = new Date();
+                if (end - start > 100) {
+                    document.body.innerHTML = '<h1 style="color: red; text-align: center; margin-top: 50px;">Debugger detectado - Acceso bloqueado</h1>';
+                }
+            };
+
+            // Ejecutar anti-debug cada cierto tiempo
+            setInterval(antiDebug, 1000);
+
+            // Proteger contra manipulación del DOM
+            let originalInnerHTML = document.body.innerHTML;
+            let checkIntegrity = function() {
+                if (document.body.innerHTML !== originalInnerHTML) {
+                    document.body.innerHTML = '<h1 style="color: red; text-align: center; margin-top: 50px;">Integridad comprometida - Página bloqueada</h1>';
+                }
+            };
+
+            setInterval(checkIntegrity, 2000);
+
+            // Bloquear impresión de pantalla
+            document.addEventListener('keyup', function(e) {
+                if (e.key === 'PrintScreen') {
+                    navigator.clipboard.writeText('');
+                    showNotification('Captura de pantalla bloqueada', 'warning');
+                }
+            });
+
+            // Proteger imágenes contra descarga
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.tagName === 'IMG') {
+                    e.preventDefault();
+                    showNotification('Descarga de imágenes bloqueada', 'warning');
+                    return false;
+                }
+            });
+
+            console.log('🔒 Sistema de seguridad activado - Nivel máximo');
+            console.log('🚫 Inspector bloqueado');
+            console.log('🚫 Copiar/pegar bloqueado');
+            console.log('🚫 Capturas bloqueadas');
+            console.log('🚫 Debugger detectado');
+
+        })();
+    </script>
+</body>
+</html>

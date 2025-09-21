@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 GameHub - Colección de Juegos</title>
+
+    <!-- Fuentes y Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos de Juegos -->
+    <link rel="stylesheet" href="juego.css">
+
+    <!-- Librerías de Música -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --bg-card: rgba(255, 255, 255, 0.05);
+
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --border: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(255, 255, 255, 0.2);
+
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+            --radius: 16px;
+            --radius-sm: 8px;
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Música Background */
+        .music-bg {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .music-toggle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .music-toggle.playing {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Navegación */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Contenido Principal */
+        .main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        /* Game Cards */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .game-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .game-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .game-play-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .game-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Modal */
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #718096;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--error);
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in:nth-child(6) { animation-delay: 0.6s; }
+        .fade-in:nth-child(7) { animation-delay: 0.7s; }
+        .fade-in:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .music-bg {
+                top: 10px;
+                right: 10px;
+            }
+
+            .music-toggle {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+        }
+
+        /* Partículas de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { animation-delay: 0s; }
+        .particle:nth-child(2) { animation-delay: 1s; }
+        .particle:nth-child(3) { animation-delay: 2s; }
+        .particle:nth-child(4) { animation-delay: 3s; }
+        .particle:nth-child(5) { animation-delay: 4s; }
+        .particle:nth-child(6) { animation-delay: 5s; }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Música Background -->
+    <div class="music-bg">
+        <button class="music-toggle" id="musicToggle" title="Activar/Desactivar Música">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">GameHub</div>
+            <ul class="nav-links">
+                <li><a href="../Index.html" class="nav-link">Portafolio</a></li>
+                <li><a href="juego.html" class="nav-link active">Juegos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1 class="hero-title">🎮 GameHub</h1>
+                <p class="hero-subtitle">¡Bienvenido a la colección definitiva de juegos! Elige tu favorito y diviértete.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="../Index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Volver al Portafolio
+                    </a>
+                </div>
+            </section>
+
+            <!-- Games Grid -->
+            <section class="games">
+                <div class="games-grid">
+                    <!-- Snake Game -->
+                    <div class="game-card fade-in">
+                        <i class="fas fa-dragon game-icon" style="color: #48bb78;"></i>
+                        <h3 class="game-name">Snake</h3>
+                        <p class="game-description">Controla la serpiente, come manzanas y crece. ¡No te choques con las paredes o contigo mismo!</p>
+                        <button class="game-play-btn" onclick="gameSystem.openGame('snake')">Jugar Ahora</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">∞</div>
+                                <div class="stat-label">Modo</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">Fácil</div>
+                                <div class="stat-label">Dificultad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory Game -->
+                    <div class="game-card fade-in">
+                        <i class="fas fa-brain game-icon" style="color: #ec4899;"></i>
+                        <h3 class="game-name">Memory</h3>
+                        <p class="game-description">Encuentra todas las parejas de emojis. ¡Pon a prueba tu memoria!</p>
+                        <button class="game-play-btn" onclick="gameSystem.openGame('memory')">Jugar Ahora</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Parejas</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">Fácil</div>
+                                <div class="stat-label">Dificultad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tic Tac Toe -->
+                    <div class="game-card fade-in">
+                        <i class="fas fa-hashtag game-icon" style="color: #6366f1;"></i>
+                        <h3 class="game-name">Tres en Raya</h3>
+                        <p class="game-description">El clásico juego de estrategia. ¡Intenta ganar al oponente!</p>
+                        <button class="game-play-btn" onclick="gameSystem.openGame('tictactoe')">Jugar Ahora</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">1vs1</div>
+                                <div class="stat-label">Modo</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">Fácil</div>
+                                <div class="stat-label">Dificultad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Game -->
+                    <div class="game-card fade-in">
+                        <i class="fas fa-question-circle game-icon" style="color: #f59e0b;"></i>
+                        <h3 class="game-name">Quiz</h3>
+                        <p class="game-description">Responde preguntas de programación y desarrollo web.</p>
+                        <button class="game-play-btn" onclick="gameSystem.openGame('quiz')">Jugar Ahora</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">Preguntas</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">Medio</div>
+                                <div class="stat-label">Dificultad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Próximamente -->
+                    <div class="game-card fade-in">
+                        <i class="fas fa-cubes game-icon" style="color: #9f7aea;"></i>
+                        <h3 class="game-name">Próximamente</h3>
+                        <p class="game-description">Más juegos emocionantes próximamente. ¡Mantente atento!</p>
+                        <button class="game-play-btn" disabled style="opacity: 0.6; cursor: not-allowed;">Próximamente</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">?</div>
+                                <div class="stat-label">Modo</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">?</div>
+                                <div class="stat-label">Dificultad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card fade-in">
+                        <i class="fas fa-gamepad game-icon" style="color: #ed8936;"></i>
+                        <h3 class="game-name">Colección</h3>
+                        <p class="game-description">Una colección creciente de juegos divertidos y desafiantes.</p>
+                        <button class="game-play-btn" disabled style="opacity: 0.6; cursor: not-allowed;">En Desarrollo</button>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Juegos</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">Variado</div>
+                                <div class="stat-label">Género</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="game-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="gameTitle" class="modal-title">Juego</h2>
+                <button class="modal-close" onclick="gameSystem.closeGame()">&times;</button>
+            </div>
+            <div id="gameContent">
+                <!-- Game content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Partículas de Fondo -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Scripts de Juegos -->
+    <script src="juego.js"></script>
+
+    <!-- Scripts -->
+    <script>
+        // Sistema de Música con Tone.js
+        class MusicSystem {
+            constructor() {
+                this.isPlaying = false;
+                this.synth = null;
+                this.sequence = null;
+                this.init();
+            }
+
+            async init() {
+                document.addEventListener('click', () => {
+                    if (!this.synth) {
+                        this.setupAudio();
+                    }
+                }, { once: true });
+            }
+
+            setupAudio() {
+                this.synth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.1, decay: 0.2, sustain: 0.8, release: 1 }
+                }).toDestination();
+
+                const notes = ['C4', 'E4', 'G4', 'A4', 'C5', 'A4', 'G4', 'E4'];
+                this.sequence = new Tone.Sequence((time, note) => {
+                    this.synth.triggerAttackRelease(note, '8n', time);
+                }, notes, '4n');
+
+                console.log('🎵 Sistema de música inicializado');
+            }
+
+            play() {
+                if (!this.synth) return;
+                if (!this.isPlaying) {
+                    Tone.start();
+                    this.sequence.start();
+                    Tone.Transport.start();
+                    this.isPlaying = true;
+                    console.log('🎵 Música iniciada');
+                }
+            }
+
+            stop() {
+                if (this.sequence && this.isPlaying) {
+                    this.sequence.stop();
+                    Tone.Transport.stop();
+                    this.isPlaying = false;
+                    console.log('🎵 Música detenida');
+                }
+            }
+
+            toggle() {
+                if (this.isPlaying) {
+                    this.stop();
+                } else {
+                    this.play();
+                }
+            }
+        }
+
+        const musicSystem = new MusicSystem();
+
+        // Control de música
+        document.getElementById('musicToggle').addEventListener('click', () => {
+            const button = document.getElementById('musicToggle');
+            musicSystem.toggle();
+
+            if (musicSystem.isPlaying) {
+                button.innerHTML = '<i class="fas fa-pause"></i>';
+                button.classList.add('playing');
+                button.title = 'Pausar Música';
+            } else {
+                button.innerHTML = '<i class="fas fa-music"></i>';
+                button.classList.remove('playing');
+                button.title = 'Reproducir Música';
+            }
+        });
+
+        // Sistema de notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#6366f1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                font-weight: 500;
+            `;
+
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Game system is loaded from juego.js
+
+        // Crear partículas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    width: ${Math.random() * 6 + 2}px;
+                    height: ${Math.random() * 6 + 2}px;
+                    animation-duration: ${Math.random() * 4 + 4}s;
+                    animation-delay: ${Math.random() * 6}s;
+                    opacity: ${Math.random() * 0.5 + 0.2};
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Activar navegación
+        function setActiveNav() {
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setActiveNav();
+
+            setTimeout(() => {
+                showNotification('¡Bienvenido a GameHub!', 'success');
+            }, 1000);
+        });
+
+        // Efectos de scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+
+            const particles = document.getElementById('particles');
+            if (particles) {
+                particles.style.transform = `translateY(${rate}px)`;
+            }
+        }, { passive: true });
+
+    </script>
+</body>
+</html>
