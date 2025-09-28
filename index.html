@@ -47,6 +47,32 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Tema Claro */
+        [data-theme="light"] {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #db2777;
+            --accent: #0891b2;
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
+
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --bg-card: rgba(0, 0, 0, 0.03);
+
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+
+            --border: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.15);
+
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -136,6 +162,54 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-option {
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            opacity: 0.7;
+        }
+
+        .language-option:hover,
+        .language-option.active {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--text-secondary));
+            color: var(--text-primary);
         }
 
         .nav-link {
@@ -805,6 +879,14 @@
                 <li><a href="#juegos" class="nav-link">Juegos</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
             </ul>
+            <div class="language-selector">
+                <div class="language-option active" data-lang="es" title="Español">🇪🇸</div>
+                <div class="language-option" data-lang="en" title="English">🇺🇸</div>
+                <div class="language-option" data-lang="pt" title="Português">🇧🇷</div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Cambiar Tema">
+                ☀
+            </button>
         </div>
     </nav>
     <script>
@@ -846,11 +928,11 @@
                                 <i class="fas fa-qrcode"></i>
                                 Ver QR del CV
                             </button>
-                            <a href="#contacto" class="btn btn-secondary">
+                            <a href="#contacto" class="btn btn-secondary" id="hero-contact-btn">
                                 <i class="fas fa-envelope"></i>
                                 Contactar
                             </a>
-                            <a href="../game/juego.html" class="btn btn-secondary">
+                            <a href="../game/juego.html" class="btn btn-secondary" id="hero-games-btn">
                                 <i class="fas fa-gamepad"></i>
                                 Ver Juegos
                             </a>
@@ -1048,11 +1130,11 @@
                     </p>
 
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="game/juego.html" class="btn btn-primary">
+                        <a href="game/juego.html" class="btn btn-primary" id="games-play-btn">
                             <i class="fas fa-play"></i>
                             Jugar Ahora
                         </a>
-                        <button class="btn btn-secondary" onclick="showGamePreview()">
+                        <button class="btn btn-secondary" onclick="showGamePreview()" id="games-preview-btn">
                             <i class="fas fa-eye"></i>
                             Ver Preview
                         </button>
@@ -1200,7 +1282,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="../game/juego.html" class="btn btn-primary" onclick="closeGamePreview()">
+                <a href="../game/juego.html" class="btn btn-primary" onclick="closeGamePreview()" id="modal-go-to-gamehub">
                     <i class="fas fa-gamepad"></i>
                     Ir a GameHub
                 </a>
@@ -1220,6 +1302,9 @@
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://ballen-jensen.netlify.app/hoja%20de%20jensen.pdf" alt="QR CV" style="display: block; margin: 0 auto;">
         </div>
     </div>
+
+    <!-- Scripts de Traducción -->
+    <script src="idioma/translations.js"></script>
 
     <!-- Scripts Modernos -->
     <script>
@@ -1311,7 +1396,8 @@
             link.click();
             document.body.removeChild(link);
 
-            showNotification('¡CV descargado correctamente!', 'success');
+            const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+            showNotification(translations[currentLang].notifications.cvDownloaded, 'success');
         }
 
         // Sistema de notificaciones
@@ -1408,12 +1494,43 @@
             }
         }
 
+        // Función para cambiar tema
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('selectedTheme', newTheme);
+
+            const themeButton = document.getElementById('themeToggle');
+            themeButton.innerHTML = newTheme === 'dark' ? '☀' : '🌙';
+            themeButton.title = newTheme === 'dark' ? 'Cambiar a Tema Claro' : 'Cambiar a Tema Oscuro';
+        }
+
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
 
+            // Inicializar tema
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const themeButton = document.getElementById('themeToggle');
+            themeButton.innerHTML = savedTheme === 'dark' ? '🌙' : '☀';
+            themeButton.title = savedTheme === 'dark' ? 'Cambiar a Tema Claro' : 'Cambiar a Tema Oscuro';
+
+            // Event listeners para selector de idioma
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const lang = option.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+
+            // Event listener para toggle de tema
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
             setTimeout(() => {
-                showNotification('¡Bienvenido a mi portafolio moderno!', 'success');
+                const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+                showNotification(translations[currentLang].notifications.welcome, 'success');
             }, 1000);
         });
 
