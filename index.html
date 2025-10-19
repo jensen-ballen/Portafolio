@@ -63,14 +63,54 @@
             --bg-card: rgba(0, 0, 0, 0.03);
 
             --text-primary: #0f172a;
-            --text-secondary: #334155;
-            --text-muted: #64748b;
+            --text-secondary: #1e293b;
+            --text-muted: #475569;
 
             --border: rgba(0, 0, 0, 0.08);
             --border-hover: rgba(0, 0, 0, 0.15);
 
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Navegación en Tema Claro */
+        [data-theme="light"] .nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .nav-logo {
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .nav-link {
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .nav-link:hover,
+        [data-theme="light"] .nav-link.active {
+            color: var(--primary);
+        }
+
+        [data-theme="light"] .hamburger-line {
+            background: var(--text-primary);
+        }
+
+        [data-theme="light"] .nav-links.mobile-menu {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .nav-links.mobile-menu .nav-link {
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .nav-links.mobile-menu .nav-link:hover,
+        [data-theme="light"] .nav-links.mobile-menu .nav-link.active {
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -248,25 +288,7 @@
         }
 
         .mobile-languages {
-            padding: 1rem 2rem 0.5rem;
-            border-top: 1px solid var(--border);
-            margin-top: 0.5rem;
-        }
-
-        .mobile-languages .language-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-            padding: 0.75rem 1rem;
-            margin: 0.25rem 0;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .mobile-languages .language-option:hover,
-        .mobile-languages .language-option.active {
-            background: rgba(255, 255, 255, 0.1);
+            display: none;
         }
 
         .language-selector {
@@ -288,6 +310,15 @@
         .language-option.active {
             opacity: 1;
             background: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="light"] .language-option {
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .language-option:hover,
+        [data-theme="light"] .language-option.active {
+            background: rgba(0, 0, 0, 0.1);
         }
 
         .theme-toggle {
@@ -449,6 +480,10 @@
             margin: 0 auto;
         }
 
+        [data-theme="light"] .section-subtitle {
+            color: var(--text-primary);
+        }
+
         /* Hero Section Moderna */
         .hero {
             text-align: center;
@@ -497,6 +532,10 @@
             color: var(--text-muted);
             margin-bottom: 3rem;
             line-height: 1.6;
+        }
+
+        [data-theme="light"] .hero-description {
+            color: var(--text-secondary);
         }
 
         .profile-image {
@@ -577,6 +616,10 @@
         .card-description {
             color: var(--text-secondary);
             line-height: 1.6;
+        }
+
+        [data-theme="light"] .card-description {
+            color: var(--text-primary);
         }
 
         /* Grid Moderno */
@@ -667,6 +710,10 @@
             line-height: 1.5;
         }
 
+        [data-theme="light"] .project-description {
+            color: var(--text-primary);
+        }
+
         /* Contact Section */
         .contact-grid {
             display: grid;
@@ -721,6 +768,10 @@
             word-wrap: break-word;
         }
 
+        [data-theme="light"] .contact-details p {
+            color: var(--text-primary);
+        }
+
         /* Footer Moderno */
         .footer {
             background: var(--bg-tertiary);
@@ -732,6 +783,10 @@
         .footer-content p {
             color: var(--text-secondary);
             margin-bottom: 0.5rem;
+        }
+
+        [data-theme="light"] .footer-content p {
+            color: var(--text-primary);
         }
 
         /* Animaciones */
@@ -771,7 +826,15 @@
             }
 
             .language-selector {
-                display: none;
+                display: flex;
+                order: -1;
+                margin-right: 0.5rem;
+            }
+
+            .language-option {
+                font-size: 1rem;
+                padding: 0.3rem;
+                margin: 0 0.1rem;
             }
 
             .theme-toggle {
@@ -1083,11 +1146,6 @@
             <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
             <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
-            <li class="mobile-languages">
-                <div class="language-option active" data-lang="es" title="Español">🇪🇸 Español</div>
-                <div class="language-option" data-lang="en" title="English">🇺🇸 English</div>
-                <div class="language-option" data-lang="pt" title="Português">🇧🇷 Português</div>
-            </li>
         </ul>
     </nav>
     <script>
@@ -1636,12 +1694,14 @@
                 option.addEventListener('click', () => {
                     const lang = option.getAttribute('data-lang');
                     changeLanguage(lang);
-                    // Cerrar menú móvil si está abierto
-                    const hamburger = document.getElementById('hamburgerMenu');
-                    const mobileMenu = document.getElementById('mobileMenu');
-                    if (hamburger && mobileMenu) {
-                        hamburger.classList.remove('active');
-                        mobileMenu.classList.remove('active');
+                    // Cerrar menú móvil si está abierto (solo en móviles)
+                    if (window.innerWidth <= 763) {
+                        const hamburger = document.getElementById('hamburgerMenu');
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        if (hamburger && mobileMenu) {
+                            hamburger.classList.remove('active');
+                            mobileMenu.classList.remove('active');
+                        }
                     }
                 });
             });
