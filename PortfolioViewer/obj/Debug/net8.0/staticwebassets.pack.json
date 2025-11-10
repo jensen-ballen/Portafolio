@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "d:\\Portafolio\\Img\\WOA2.jpg",
+      "PackagePath": "staticwebassets\\portfolio\\Img\\WOA2.jpg"
+    },
+    {
+      "Id": "d:\\Portafolio\\Img\\ferreteria.png",
+      "PackagePath": "staticwebassets\\portfolio\\Img\\ferreteria.png"
+    },
+    {
+      "Id": "d:\\Portafolio\\Img\\foto de jensen.jpeg",
+      "PackagePath": "staticwebassets\\portfolio\\Img\\foto de jensen.jpeg"
+    },
+    {
+      "Id": "d:\\Portafolio\\Img\\hermes.png",
+      "PackagePath": "staticwebassets\\portfolio\\Img\\hermes.png"
+    },
+    {
+      "Id": "d:\\Portafolio\\Img\\historia.jpg",
+      "PackagePath": "staticwebassets\\portfolio\\Img\\historia.jpg"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\obj\\Debug\\net8.0\\compressed\\t84jzpibph.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\obj\\Debug\\net8.0\\scopedcss\\bundle\\PortfolioViewer.styles.css",
+      "PackagePath": "staticwebassets\\PortfolioViewer.styles.css"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "d:\\Portafolio\\PortfolioViewer\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "d:\\Portafolio\\idioma\\translations.js",
+      "PackagePath": "staticwebassets\\portfolio\\idioma\\translations.js"
+    },
+    {
+      "Id": "d:\\Portafolio\\index.html",
+      "PackagePath": "staticwebassets\\portfolio\\index.html"
+    },
+    {
+      "Id": "d:\\Portafolio\\security.min.js",
+      "PackagePath": "staticwebassets\\portfolio\\security.min.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PortfolioViewer.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PortfolioViewer.props",
+      "PackagePath": "build\\PortfolioViewer.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PortfolioViewer.props",
+      "PackagePath": "buildMultiTargeting\\PortfolioViewer.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PortfolioViewer.props",
+      "PackagePath": "buildTransitive\\PortfolioViewer.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
