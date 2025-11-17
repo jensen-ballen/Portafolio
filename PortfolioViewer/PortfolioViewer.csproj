@@ -12,11 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Incluir archivos del portafolio original -->
-    <Content Include="..\index.html" Link="wwwroot\portfolio\index.html" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\security.min.js" Link="wwwroot\portfolio\security.min.js" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\idioma\translations.js" Link="wwwroot\portfolio\idioma\translations.js" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\Img\*" Link="wwwroot\portfolio\Img\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Los archivos ya están copiados manualmente en wwwroot/portfolio -->
   </ItemGroup>
 
 </Project>

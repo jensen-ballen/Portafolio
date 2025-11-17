@@ -6,6 +6,12 @@
 <PageTitle>Portfolio Viewer - Jensen Ballen</PageTitle>
 
 <div class="portfolio-viewer">
+    <!-- Botón de cambio de tema -->
+    <button @onclick="ToggleTheme" class="theme-toggle-btn" title="Cambiar tema">
+        <span class="theme-icon sun"></span>
+        <span class="theme-icon moon"></span>
+    </button>
+
     <header class="viewer-header">
         <h1>🛡️ Portfolio Viewer Seguro</h1>
         <p>Visualización protegida del portafolio de Jensen Ballen</p>
@@ -85,192 +91,7 @@
     </div>
 </div>
 
-<style>
-    .portfolio-viewer {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .viewer-header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .viewer-header h1 {
-        color: #2563eb;
-        margin-bottom: 0.5rem;
-    }
-
-    .viewer-controls {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .btn-load, .btn-security {
-        padding: 0.75rem 1.5rem;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-    }
-
-    .btn-load {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        color: white;
-    }
-
-    .btn-load:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn-security {
-        background: linear-gradient(135deg, #dc2626, #b91c1c);
-        color: white;
-    }
-
-    .btn-security:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-
-    .security-panel {
-        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .security-panel h3 {
-        margin-bottom: 1rem;
-        color: #1e293b;
-        text-align: center;
-    }
-
-    .security-status {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-    }
-
-    .status-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem;
-        background: white;
-        border-radius: 8px;
-        border: 1px solid #e2e8f0;
-    }
-
-    .status-icon {
-        font-size: 1.5rem;
-    }
-
-    .portfolio-content {
-        min-height: 200px;
-        border: 2px dashed #cbd5e1;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f8fafc;
-    }
-
-    .portfolio-display {
-        width: 100%;
-        max-width: 1200px;
-    }
-
-    .portfolio-iframe-container {
-        width: 100%;
-        height: 600px;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-    }
-
-    .portfolio-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: white;
-    }
-
-    .security-notice {
-        display: flex;
-        gap: 1rem;
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-        border: 1px solid #0ea5e9;
-        border-radius: 12px;
-        align-items: flex-start;
-    }
-
-    .notice-icon {
-        font-size: 2rem;
-        flex-shrink: 0;
-    }
-
-    .notice-text h4 {
-        margin: 0 0 0.5rem 0;
-        color: #0c4a6e;
-        font-size: 1.2rem;
-    }
-
-    .notice-text p {
-        margin: 0 0 1rem 0;
-        color: #0369a1;
-        font-weight: 500;
-    }
-
-    .notice-text ul {
-        margin: 0;
-        padding-left: 1.5rem;
-        color: #075985;
-    }
-
-    .notice-text li {
-        margin-bottom: 0.25rem;
-    }
-
-    .loading {
-        text-align: center;
-        color: #64748b;
-    }
-
-    .spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid #e2e8f0;
-        border-top: 4px solid #2563eb;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 1rem;
-    }
-
-    @@keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .success-message {
-        color: #059669;
-        font-weight: 600;
-        text-align: center;
-        padding: 2rem;
-    }
-</style>
+<link rel="stylesheet" href="css/portfolio-viewer.css" />
 
 @code {
     private bool showSecurity = false;
@@ -278,10 +99,15 @@
     private bool portfolioLoaded = false;
     private string portfolioHtml = string.Empty;
     private Dictionary<string, string> securityStatus = new();
+    private string currentTheme = "light";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         securityStatus = SecurityService.GetSecurityStatus();
+
+        // Cargar tema guardado
+        currentTheme = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "portfolio-theme") ?? "light";
+        await ApplyTheme(currentTheme);
     }
 
     private async Task LoadPortfolio()
@@ -347,5 +173,18 @@
     private void ToggleSecurity()
     {
         showSecurity = !showSecurity;
+    }
+
+    private async Task ToggleTheme()
+    {
+        currentTheme = currentTheme == "light" ? "dark" : "light";
+        await ApplyTheme(currentTheme);
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "portfolio-theme", currentTheme);
+    }
+
+    private async Task ApplyTheme(string theme)
+    {
+        await JSRuntime.InvokeVoidAsync("eval", $"document.documentElement.setAttribute('data-theme', '{theme}')");
+        StateHasChanged();
     }
 }
