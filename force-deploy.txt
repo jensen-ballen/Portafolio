@@ -1,0 +1,4 @@
+Force Netlify redeploy - HTML site
+Timestamp: 2025-11-24 03:40 UTC
+This file forces Netlify to detect changes and redeploy the HTML site.
+Mobile compatibility fix applied.
