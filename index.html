@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Vida | Portafolio Profesional</title>
+    <meta name="description" content="Hoja de vida profesional: perfil, experiencia, formación, habilidades y proyectos. Descarga el CV en PDF y conoce mi trabajo.">
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved
+            ? saved
+            : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)
+              ? 'light'
+              : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="#inicio" class="nav__logo">CV</a>
+            <ul class="nav__menu">
+                <li><a href="#perfil">Perfil</a></li>
+                <li><a href="#experiencia">Experiencia</a></li>
+                <li><a href="#formacion">Formación</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <div class="nav__actions">
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar a modo claro" title="Cambiar tema">
+                    <span aria-hidden="true" class="icon-btn__icon">☾</span>
+                </button>
+                <a href="hoja_de_vida.pdf" download="hoja_de_vida.pdf" class="nav__cta">
+                    Descargar PDF
+                </a>
+                <button class="icon-btn icon-btn--menu" id="navToggle" type="button" aria-label="Abrir menú" title="Menú">
+                    <span aria-hidden="true" class="icon-btn__icon">☰</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero__content">
+                <div class="hero__photo-wrap">
+                    <img src="img/foto_jensen.jpeg" alt="Foto de perfil" class="hero__photo">
+                </div>
+                <div class="hero__text">
+                    <h1 class="hero__title">Mi Hoja de Vida</h1>
+                    <p class="hero__subtitle">Portafolio profesional</p>
+                    <a href="hoja_de_vida.pdf" download="hoja_de_vida.pdf" class="btn btn--primary">
+                        <span class="btn__icon">↓</span>
+                        Descargar hoja de vida en PDF
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="perfil" class="section">
+            <div class="container">
+                <h2 class="section__title">Perfil profesional</h2>
+                <p class="section__lead">
+                    Aquí puedes escribir una breve descripción sobre ti, tu experiencia y tus objetivos profesionales. 
+                    Personaliza este texto según tu perfil.
+                </p>
+            </div>
+        </section>
+
+        <section id="experiencia" class="section section--alt">
+            <div class="container">
+                <h2 class="section__title">Experiencia laboral</h2>
+                <div class="timeline">
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3>Cargo o puesto</h3>
+                            <span class="timeline__meta">Empresa · Año – Año</span>
+                            <p>Descripción de tus responsabilidades y logros en este puesto.</p>
+                        </div>
+                    </article>
+                    <article class="timeline__item">
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3>Otro cargo</h3>
+                            <span class="timeline__meta">Empresa · Año – Año</span>
+                            <p>Descripción de tus responsabilidades y logros.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="formacion" class="section">
+            <div class="container">
+                <h2 class="section__title">Formación académica</h2>
+                <div class="cards">
+                    <article class="card">
+                        <h3>Título o carrera</h3>
+                        <span class="card__meta">Institución · Año</span>
+                        <p>Breve descripción o menciones.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Otro título o curso</h3>
+                        <span class="card__meta">Institución · Año</span>
+                        <p>Breve descripción.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="habilidades" class="section section--alt">
+            <div class="container">
+                <h2 class="section__title">Habilidades</h2>
+                <div class="skills">
+                    <span class="skill">Habilidad 1</span>
+                    <span class="skill">Habilidad 2</span>
+                    <span class="skill">Habilidad 3</span>
+                    <span class="skill">Habilidad 4</span>
+                    <span class="skill">Habilidad 5</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyectos" class="section">
+            <div class="container">
+                <h2 class="section__title">Proyectos</h2>
+                <p class="section__lead">
+                    Algunos repositorios recientes de GitHub. Se actualiza automáticamente.
+                </p>
+
+                <div class="projects" data-github-user="Jensenbanguera">
+                    <div class="projects__header">
+                        <a class="link-pill" id="githubProfileLink" href="#" target="_blank" rel="noreferrer noopener">
+                            Ver perfil de GitHub
+                        </a>
+                    </div>
+                    <div class="projects__grid" id="projectsGrid" aria-live="polite">
+                        <div class="project project--placeholder">
+                            <h3>Cargando proyectos…</h3>
+                            <p>Un momento.</p>
+                        </div>
+                    </div>
+                    <p class="projects__note" id="projectsNote" hidden></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="section">
+            <div class="container">
+                <h2 class="section__title">Contacto</h2>
+                <p class="section__lead">
+                    Conversemos. Puedes escribirme o visitar mis perfiles.
+                </p>
+
+                <div class="contact">
+                    <a class="contact__item" href="mailto:jensenbanguera@gmail.com">
+                        <span class="contact__label">Correo</span>
+                        <span class="contact__value">jensenbanguera@gmail.com</span>
+                    </a>
+                    <a class="contact__item" href="https://www.linkedin.com/in/jensen-ballen-banguera-323bb3349/" target="_blank" rel="noreferrer noopener">
+                        <span class="contact__label">LinkedIn</span>
+                        <span class="contact__value">jensen-ballen-banguera</span>
+                    </a>
+                    <a class="contact__item" href="https://x.com/Jensenbanguera" target="_blank" rel="noreferrer noopener">
+                        <span class="contact__label">X</span>
+                        <span class="contact__value">@Jensenbanguera</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="year"></span> · Hoja de vida profesional</p>
+        </div>
+    </footer>
+
+    <script src="Js/main.js"></script>
+</body>
+</html>
