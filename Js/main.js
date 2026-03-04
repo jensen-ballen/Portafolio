@@ -5,11 +5,156 @@
  * - Toggle tema claro/oscuro con persistencia
  * - Menú móvil
  * - Carga de proyectos desde GitHub
+ * - Textos bilingües (ES / EN)
  */
 
 document.addEventListener('DOMContentLoaded', function () {
   var root = document.documentElement;
   var body = document.body;
+
+  /* Idioma */
+  var langToggle = document.getElementById('langToggle');
+  var currentLang = 'es';
+
+  var translations = {
+    es: {
+      'lang.current': 'ES',
+      'nav.profile': 'Perfil',
+      'nav.services': 'Servicios',
+      'nav.experience': 'Experiencia',
+      'nav.process': 'Proceso',
+      'nav.education': 'Formación',
+      'nav.skills': 'Habilidades',
+      'nav.achievements': 'Logros',
+      'nav.projects': 'Proyectos',
+      'nav.contact': 'Contacto',
+      'hero.subtitle': 'Portafolio profesional · jensenadsotarde',
+      'hero.cta': 'Descargar hoja de vida en PDF',
+      'services.title': 'Servicios / Qué ofrezco',
+      'services.lead': 'Formas en las que puedo aportar valor a tu equipo o proyecto.',
+      'services.webapps.title': 'Aplicaciones y sitios web modernos',
+      'services.webapps.body': 'Diseño e implementación de interfaces limpias, responsivas y enfocadas en la experiencia del usuario.',
+      'services.landing.title': 'Landing pages para productos o marcas',
+      'services.landing.body': 'Páginas de presentación claras, rápidas y optimizadas para conversión y campañas.',
+      'services.maintenance.title': 'Mejora y mantenimiento de proyectos',
+      'services.maintenance.body': 'Refactorización, corrección de errores y mejoras visuales sobre proyectos existentes.',
+      'profile.title': 'Perfil profesional',
+      'profile.lead': 'Desarrollador con interés en construir productos digitales claros, accesibles y mantenibles, combinando detalle visual con buenas prácticas de código.',
+      'experience.title': 'Experiencia laboral',
+      'process.title': 'Cómo trabajo',
+      'process.lead': 'Un proceso simple y claro para que el trabajo fluya sin sorpresas.',
+      'process.step1.title': 'Escuchar y entender',
+      'process.step1.body': 'Revisión de contexto, objetivos y referencias para alinear expectativas.',
+      'process.step2.title': 'Propuesta clara',
+      'process.step2.body': 'Definición de alcance, tiempos y entregables priorizando lo esencial.',
+      'process.step3.title': 'Diseño y desarrollo',
+      'process.step3.body': 'Iteraciones cortas, revisiones frecuentes y enfoque en la experiencia de uso.',
+      'process.step4.title': 'Entrega y cuidado',
+      'process.step4.body': 'Pruebas, ajustes finales y acompañamiento durante la puesta en producción.',
+      'education.title': 'Formación académica',
+      'skills.title': 'Habilidades',
+      'achievements.title': 'Logros y tecnologías',
+      'achievements.lead': 'Una vista rápida de herramientas que uso y algunos hitos que quiero seguir ampliando.',
+      'achievements.stack.title': 'Tecnologías principales',
+      'achievements.milestones.title': 'Logros destacados',
+      'achievements.milestone1': 'Portafolio personal publicado y optimizado para dispositivos móviles.',
+      'achievements.milestone2': 'Integración con GitHub para mostrar proyectos actualizados.',
+      'achievements.milestone3': 'Experimentación constante con nuevas herramientas y buenas prácticas.',
+      'projects.title': 'Proyectos',
+      'projects.lead': 'Algunos repositorios recientes de GitHub. Se actualiza automáticamente.',
+      'contact.title': 'Contacto',
+      'contact.lead': 'Conversemos. Puedes escribirme o visitar mis perfiles.',
+      'footer.text': 'Hoja de vida profesional'
+    },
+    en: {
+      'lang.current': 'EN',
+      'nav.profile': 'Profile',
+      'nav.services': 'Services',
+      'nav.experience': 'Experience',
+      'nav.process': 'Process',
+      'nav.education': 'Education',
+      'nav.skills': 'Skills',
+      'nav.achievements': 'Highlights',
+      'nav.projects': 'Projects',
+      'nav.contact': 'Contact',
+      'hero.subtitle': 'Professional portfolio · jensenadsotarde',
+      'hero.cta': 'Download résumé (PDF)',
+      'services.title': 'Services / What I offer',
+      'services.lead': 'Ways I can bring value to your team or project.',
+      'services.webapps.title': 'Modern websites and web apps',
+      'services.webapps.body': 'Design and implementation of clean, responsive interfaces focused on user experience.',
+      'services.landing.title': 'Landing pages for products or brands',
+      'services.landing.body': 'Fast, clear landing pages optimized for campaigns and conversion.',
+      'services.maintenance.title': 'Project improvement and maintenance',
+      'services.maintenance.body': 'Refactors, bug fixing and visual improvements on existing projects.',
+      'profile.title': 'Professional profile',
+      'profile.lead': 'Developer focused on building clear, accessible and maintainable digital products, balancing visuals with good code practices.',
+      'experience.title': 'Work experience',
+      'process.title': 'How I work',
+      'process.lead': 'A simple, clear process so work flows without surprises.',
+      'process.step1.title': 'Listen and understand',
+      'process.step1.body': 'Review of context, goals and references to align expectations.',
+      'process.step2.title': 'Clear proposal',
+      'process.step2.body': 'Scope, timelines and deliverables defined with focus on what matters most.',
+      'process.step3.title': 'Design and development',
+      'process.step3.body': 'Short iterations, frequent reviews and focus on the user experience.',
+      'process.step4.title': 'Delivery and care',
+      'process.step4.body': 'Testing, final polishing and support during launch.',
+      'education.title': 'Education',
+      'skills.title': 'Skills',
+      'achievements.title': 'Highlights & technologies',
+      'achievements.lead': 'A quick view of tools I use and milestones I want to keep growing.',
+      'achievements.stack.title': 'Core technologies',
+      'achievements.milestones.title': 'Selected highlights',
+      'achievements.milestone1': 'Personal portfolio published and optimized for mobile devices.',
+      'achievements.milestone2': 'GitHub integration to display up-to-date projects.',
+      'achievements.milestone3': 'Constant experimentation with new tools and best practices.',
+      'projects.title': 'Projects',
+      'projects.lead': 'Some recent GitHub repositories. Automatically kept up to date.',
+      'contact.title': 'Contact',
+      'contact.lead': "Let's talk. You can email me or visit my profiles.",
+      'footer.text': 'Professional résumé'
+    }
+  };
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    try {
+      localStorage.setItem('lang', lang);
+    } catch (e) {}
+    var dict = translations[lang] || translations.es;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      var value = dict[key];
+      if (typeof value === 'string') {
+        el.textContent = value;
+      }
+    });
+  }
+
+  (function initLanguage() {
+    var savedLang = null;
+    try {
+      savedLang = localStorage.getItem('lang');
+    } catch (e) {}
+    var initial = savedLang === 'en' ? 'en' : 'es';
+    applyLanguage(initial);
+  })();
+
+  if (langToggle) {
+    langToggle.addEventListener('click', function () {
+      var next = currentLang === 'es' ? 'en' : 'es';
+      applyLanguage(next);
+      langToggle.setAttribute(
+        'aria-label',
+        next === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish'
+      );
+      langToggle.setAttribute(
+        'title',
+        next === 'es' ? 'Cambiar idioma' : 'Change language'
+      );
+    });
+  }
 
   /* Año actual en el footer */
   var yearEl = document.getElementById('year');

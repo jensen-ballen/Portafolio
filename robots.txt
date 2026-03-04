@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# apunta al sitemap para facilitar el rastreo
+Sitemap: https://jensenadsotarde.netlify.app/sitemap.xml
+
+# puedes añadir reglas adicionales según necesites, por ejemplo bloquear carpetas de desarrollo

@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jensen Ballen Banguera | jensenadsotarde | Portafolio y Hoja de Vida</title>
-    <meta name="description" content="Portafolio y hoja de vida de Jensen Ballen Banguera (jensenadsotarde): perfil profesional, experiencia, formación, proyectos, GitHub y formas de contacto.">
+    <!-- SEO basics: name in title, description, keywords -->
+    <meta name="description" content="Portafolio y hoja de vida de Jensen Ballen Banguera (jensenadsotarde) en jensenadsotarde.netlify.app: perfil profesional, experiencia, formación, proyectos, GitHub y formas de contacto.">
+    <meta name="author" content="Jensen Ballen Banguera">
     <meta name="robots" content="index, follow">
     <meta name="keywords" content="Jensen Ballen Banguera,jensenadsotarde,hoja de vida,portafolio,perfil profesional,contacto,desarrollador,proyectos,GitHub,LinkedIn">
+    <!-- canonical URL for search engines (actualiza con tu dominio real) -->
+    <!-- Si usas Netlify predeterminado o un dominio personalizado, ponlo aquí: -->
+    <link rel="canonical" href="https://jensenadsotarde.netlify.app/">
+    <!-- sitemap reference (también añade esta línea en robots.txt) -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <!-- mejorar los metadatos Open Graph -->
+    <meta property="og:url" content="https://jensenadsotarde.netlify.app/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Jensen Ballen Banguera | jensenadsotarde">
     <meta property="og:description" content="Hoja de vida y portafolio de Jensen Ballen Banguera (jensenadsotarde): experiencia, formación, proyectos y contacto.">
     <meta property="og:locale" content="es_CO">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://jensenadsotarde.netlify.app/">
+    <link rel="alternate" hreflang="es" href="https://jensenadsotarde.netlify.app/">
     <script>
       (function () {
         try {
@@ -50,15 +61,21 @@
         <nav class="nav">
             <a href="#inicio" class="nav__logo">CV</a>
             <ul class="nav__menu">
-                <li><a href="#perfil">Perfil</a></li>
-                <li><a href="#experiencia">Experiencia</a></li>
-                <li><a href="#formacion">Formación</a></li>
-                <li><a href="#habilidades">Habilidades</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#perfil" data-i18n="nav.profile">Perfil</a></li>
+                <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+                <li><a href="#experiencia" data-i18n="nav.experience">Experiencia</a></li>
+                <li><a href="#proceso" data-i18n="nav.process">Proceso</a></li>
+                <li><a href="#formacion" data-i18n="nav.education">Formación</a></li>
+                <li><a href="#habilidades" data-i18n="nav.skills">Habilidades</a></li>
+                <li><a href="#logros" data-i18n="nav.achievements">Logros</a></li>
+                <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
+                <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
             </ul>
 
             <div class="nav__actions">
+                <button class="icon-btn icon-btn--lang" id="langToggle" type="button" aria-label="Cambiar a inglés" title="Cambiar idioma">
+                    <span class="icon-btn__icon" data-i18n="lang.current">ES</span>
+                </button>
                 <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar a modo claro" title="Cambiar tema">
                     <span aria-hidden="true" class="icon-btn__icon">☾</span>
                 </button>
@@ -80,28 +97,56 @@
                 </div>
                 <div class="hero__text">
                     <h1 class="hero__title">Jensen Ballen Banguera</h1>
-                    <p class="hero__subtitle">Portafolio profesional · jensenadsotarde</p>
+                    <p class="hero__subtitle" data-i18n="hero.subtitle">Portafolio profesional · jensenadsotarde</p>
                     <a href="hoja_de_vida.pdf" download="hoja_de_vida.pdf" class="btn btn--primary">
                         <span class="btn__icon">↓</span>
-                        Descargar hoja de vida en PDF
+                        <span data-i18n="hero.cta">Descargar hoja de vida en PDF</span>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios" class="section section--alt">
+            <div class="container">
+                <h2 class="section__title" data-i18n="services.title">Servicios / Qué ofrezco</h2>
+                <p class="section__lead" data-i18n="services.lead">
+                    Formas en las que puedo aportar valor a tu equipo o proyecto.
+                </p>
+                <div class="cards services">
+                    <article class="card service">
+                        <h3 data-i18n="services.webapps.title">Aplicaciones y sitios web modernos</h3>
+                        <p data-i18n="services.webapps.body">
+                            Diseño e implementación de interfaces limpias, responsivas y enfocadas en la experiencia del usuario.
+                        </p>
+                    </article>
+                    <article class="card service">
+                        <h3 data-i18n="services.landing.title">Landing pages para productos o marcas</h3>
+                        <p data-i18n="services.landing.body">
+                            Páginas de presentación claras, rápidas y optimizadas para conversión y campañas.
+                        </p>
+                    </article>
+                    <article class="card service">
+                        <h3 data-i18n="services.maintenance.title">Mejora y mantenimiento de proyectos</h3>
+                        <p data-i18n="services.maintenance.body">
+                            Refactorización, corrección de errores y mejoras visuales sobre proyectos existentes.
+                        </p>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section id="perfil" class="section">
             <div class="container">
-                <h2 class="section__title">Perfil profesional</h2>
-                <p class="section__lead">
-                    Aquí puedes escribir una breve descripción sobre ti, tu experiencia y tus objetivos profesionales. 
-                    Personaliza este texto según tu perfil.
+                <h2 class="section__title" data-i18n="profile.title">Perfil profesional</h2>
+                <p class="section__lead" data-i18n="profile.lead">
+                    Desarrollador con interés en construir productos digitales claros, accesibles y mantenibles, combinando detalle visual con buenas prácticas de código.
                 </p>
             </div>
         </section>
 
         <section id="experiencia" class="section section--alt">
             <div class="container">
-                <h2 class="section__title">Experiencia laboral</h2>
+                <h2 class="section__title" data-i18n="experience.title">Experiencia laboral</h2>
                 <div class="timeline">
                     <article class="timeline__item">
                         <div class="timeline__marker"></div>
@@ -123,9 +168,40 @@
             </div>
         </section>
 
+        <section id="proceso" class="section">
+            <div class="container">
+                <h2 class="section__title" data-i18n="process.title">Cómo trabajo</h2>
+                <p class="section__lead" data-i18n="process.lead">
+                    Un proceso simple y claro para que el trabajo fluya sin sorpresas.
+                </p>
+                <div class="process">
+                    <div class="process__step">
+                        <span class="process__badge">1</span>
+                        <h3 data-i18n="process.step1.title">Escuchar y entender</h3>
+                        <p data-i18n="process.step1.body">Revisión de contexto, objetivos y referencias para alinear expectativas.</p>
+                    </div>
+                    <div class="process__step">
+                        <span class="process__badge">2</span>
+                        <h3 data-i18n="process.step2.title">Propuesta clara</h3>
+                        <p data-i18n="process.step2.body">Definición de alcance, tiempos y entregables priorizando lo esencial.</p>
+                    </div>
+                    <div class="process__step">
+                        <span class="process__badge">3</span>
+                        <h3 data-i18n="process.step3.title">Diseño y desarrollo</h3>
+                        <p data-i18n="process.step3.body">Iteraciones cortas, revisiones frecuentes y enfoque en la experiencia de uso.</p>
+                    </div>
+                    <div class="process__step">
+                        <span class="process__badge">4</span>
+                        <h3 data-i18n="process.step4.title">Entrega y cuidado</h3>
+                        <p data-i18n="process.step4.body">Pruebas, ajustes finales y acompañamiento durante la puesta en producción.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="formacion" class="section">
             <div class="container">
-                <h2 class="section__title">Formación académica</h2>
+                <h2 class="section__title" data-i18n="education.title">Formación académica</h2>
                 <div class="cards">
                     <article class="card">
                         <h3>Título o carrera</h3>
@@ -143,7 +219,7 @@
 
         <section id="habilidades" class="section section--alt">
             <div class="container">
-                <h2 class="section__title">Habilidades</h2>
+                <h2 class="section__title" data-i18n="skills.title">Habilidades</h2>
                 <div class="skills">
                     <span class="skill">Habilidad 1</span>
                     <span class="skill">Habilidad 2</span>
@@ -154,10 +230,39 @@
             </div>
         </section>
 
+        <section id="logros" class="section">
+            <div class="container">
+                <h2 class="section__title" data-i18n="achievements.title">Logros y tecnologías</h2>
+                <p class="section__lead" data-i18n="achievements.lead">
+                    Una vista rápida de herramientas que uso y algunos hitos que quiero seguir ampliando.
+                </p>
+                <div class="achievements">
+                    <div class="achievements__col">
+                        <h3 class="achievements__subtitle" data-i18n="achievements.stack.title">Tecnologías principales</h3>
+                        <div class="badges">
+                            <span class="badge">HTML5</span>
+                            <span class="badge">CSS3</span>
+                            <span class="badge">JavaScript</span>
+                            <span class="badge">Responsive Design</span>
+                            <span class="badge">Git / GitHub</span>
+                        </div>
+                    </div>
+                    <div class="achievements__col">
+                        <h3 class="achievements__subtitle" data-i18n="achievements.milestones.title">Logros destacados</h3>
+                        <ul class="achievements__list">
+                            <li data-i18n="achievements.milestone1">Portafolio personal publicado y optimizado para dispositivos móviles.</li>
+                            <li data-i18n="achievements.milestone2">Integración con GitHub para mostrar proyectos actualizados.</li>
+                            <li data-i18n="achievements.milestone3">Experimentación constante con nuevas herramientas y buenas prácticas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="proyectos" class="section">
             <div class="container">
-                <h2 class="section__title">Proyectos</h2>
-                <p class="section__lead">
+                <h2 class="section__title" data-i18n="projects.title">Proyectos</h2>
+                <p class="section__lead" data-i18n="projects.lead">
                     Algunos repositorios recientes de GitHub. Se actualiza automáticamente.
                 </p>
 
@@ -180,8 +285,8 @@
 
         <section id="contacto" class="section">
             <div class="container">
-                <h2 class="section__title">Contacto</h2>
-                <p class="section__lead">
+                <h2 class="section__title" data-i18n="contact.title">Contacto</h2>
+                <p class="section__lead" data-i18n="contact.lead">
                     Conversemos. Puedes escribirme o visitar mis perfiles.
                 </p>
 
@@ -206,7 +311,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; <span id="year"></span> · Hoja de vida profesional</p>
+            <p>&copy; <span id="year"></span> · <span data-i18n="footer.text">Hoja de vida profesional</span></p>
         </div>
     </footer>
 
