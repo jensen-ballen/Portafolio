@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'nav.skills': 'Habilidades',
       'nav.achievements': 'Logros',
       'nav.projects': 'Proyectos',
+      'nav.goals': 'Objetivos',
       'nav.contact': 'Contacto',
       'hero.subtitle': 'Portafolio profesional',
       'hero.cta': 'Descargar hoja de vida en PDF',
@@ -40,7 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
       'services.maintenance.body': 'Refactorización, corrección de errores y mejoras visuales sobre proyectos existentes.',
       'profile.title': 'Perfil profesional',
       'profile.lead': 'Desarrollador con interés en construir productos digitales claros, accesibles y mantenibles, combinando detalle visual con buenas prácticas de código.',
+      'profile.about.title': 'Sobre mí',
+      'profile.about.body': 'Soy Jensen Ballen, un profesional junior con background en electrónica y transición hacia el desarrollo de software. Mi viaje comenzó con la mecánica industrial, donde aprendí la importancia de la precisión y el trabajo en equipo. Actualmente, me especializo en tecnologías web y backend, con pasión por resolver problemas complejos y contribuir a equipos dinámicos. Fuera del trabajo, disfruto de la innovación tecnológica y el aprendizaje continuo.',
       'experience.title': 'Experiencia laboral',
+      'experience.job1.title': 'Ayudante de Mecánica Industrial',
+      'experience.job1.description': 'Apoyo en tareas de mecánica industrial, organización de herramientas y asistencia en talleres durante una semana de experiencia práctica.',
+      'experience.job2.title': 'Aprendiz Sena',
+      'experience.job2.description': 'Formación práctica en el SENA, soporte en mantenimiento de computo en instalaciones de la empresa, desarrollo de formularios web, SQL Oracle Developer y backend con c#.',
       'process.title': 'Cómo trabajo',
       'process.lead': 'Un proceso simple y claro para que el trabajo fluya sin sorpresas.',
       'process.step1.title': 'Escuchar y entender',
@@ -52,6 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
       'process.step4.title': 'Entrega y cuidado',
       'process.step4.body': 'Pruebas, ajustes finales y acompañamiento durante la puesta en producción.',
       'education.title': 'Formación académica',
+      'education.degree1.title': 'Bachiller Técnico en Electrónica',
+      'education.degree1.description': 'Graduado con conocimientos en electrónica y sistemas técnicos.',
+      'education.degree2.title': 'Tecnología en Análisis y Desarrollo de Software',
+      'education.degree2.description': 'Formación actual en análisis y desarrollo de software, incluyendo programación y diseño de sistemas.',
       'skills.title': 'Habilidades',
       'achievements.title': 'Logros y tecnologías',
       'achievements.lead': 'Una vista rápida de herramientas que uso y algunos hitos que quiero seguir ampliando.',
@@ -64,7 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
       'projects.lead': 'Algunos repositorios recientes de GitHub. Se actualiza automáticamente.',
       'contact.title': 'Contacto',
       'contact.lead': 'Conversemos. Puedes escribirme o visitar mis perfiles.',
-      'footer.text': 'Hoja de vida profesional'
+      'footer.text': 'Hoja de vida profesional',
+      'goals.title': 'Objetivos Profesionales',
+      'goals.lead': 'Mis metas a corto y mediano plazo en el desarrollo de software.',
+      'goals.body': 'Busco oportunidades en roles de desarrollo frontend/backend para aplicar y expandir mis conocimientos en tecnologías web. Mi objetivo es contribuir a proyectos innovadores, aprender de equipos experimentados y crecer profesionalmente en un entorno dinámico.'
     },
     en: {
       'lang.current': 'EN',
@@ -76,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'nav.skills': 'Skills',
       'nav.achievements': 'Highlights',
       'nav.projects': 'Projects',
+      'nav.goals': 'Goals',
       'nav.contact': 'Contact',
       'hero.subtitle': 'Professional portfolio',
       'hero.cta': 'Download résumé (PDF)',
@@ -89,7 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
       'services.maintenance.body': 'Refactors, bug fixing and visual improvements on existing projects.',
       'profile.title': 'Professional profile',
       'profile.lead': 'Developer focused on building clear, accessible and maintainable digital products, balancing visuals with good code practices.',
+      'profile.about.title': 'About me',
+      'profile.about.body': 'I am Jensen Ballen, a junior professional with a background in electronics transitioning to software development. My journey began in industrial mechanics, where I learned the importance of precision and teamwork. Currently, I specialize in web and backend technologies, with a passion for solving complex problems and contributing to dynamic teams. Outside of work, I enjoy technological innovation and continuous learning.',
       'experience.title': 'Work experience',
+      'experience.job1.title': 'Industrial Mechanics Assistant',
+      'experience.job1.description': 'Support in industrial mechanics tasks, tool organization and assistance in workshops during a week of practical experience.',
+      'experience.job2.title': 'Sena Apprentice',
+      'experience.job2.description': 'Practical training at SENA, computer maintenance support in company facilities, web form development, SQL Oracle Developer and backend with C#.',
       'process.title': 'How I work',
       'process.lead': 'A simple, clear process so work flows without surprises.',
       'process.step1.title': 'Listen and understand',
@@ -101,6 +122,10 @@ document.addEventListener('DOMContentLoaded', function () {
       'process.step4.title': 'Delivery and care',
       'process.step4.body': 'Testing, final polishing and support during launch.',
       'education.title': 'Education',
+      'education.degree1.title': 'Technical High School Diploma in Electronics',
+      'education.degree1.description': 'Graduated with knowledge in electronics and technical systems.',
+      'education.degree2.title': 'Technology in Software Analysis and Development',
+      'education.degree2.description': 'Current training in software analysis and development, including programming and system design.',
       'skills.title': 'Skills',
       'achievements.title': 'Highlights & technologies',
       'achievements.lead': 'A quick view of tools I use and milestones I want to keep growing.',
@@ -113,10 +138,12 @@ document.addEventListener('DOMContentLoaded', function () {
       'projects.lead': 'Some recent GitHub repositories. Automatically kept up to date.',
       'contact.title': 'Contact',
       'contact.lead': "Let's talk. You can email me or visit my profiles.",
-      'footer.text': 'Professional résumé'
+      'footer.text': 'Professional résumé',
+      'goals.title': 'Professional Goals',
+      'goals.lead': 'My short and medium-term goals in software development.',
+      'goals.body': 'I seek opportunities in frontend/backend development roles to apply and expand my knowledge in web technologies. My goal is to contribute to innovative projects, learn from experienced teams, and grow professionally in a dynamic environment.'
     }
   };
-
   function applyLanguage(lang) {
     currentLang = lang;
     try {
