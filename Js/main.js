@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'nav.projects': 'Proyectos',
       'nav.goals': 'Objetivos',
       'nav.contact': 'Contacto',
+      'nav.logo': 'CV',
       'hero.subtitle': 'Portafolio profesional',
       'hero.cta': 'Descargar hoja de vida en PDF',
       'services.title': 'Servicios / Qué ofrezco',
@@ -58,6 +59,19 @@ document.addEventListener('DOMContentLoaded', function () {
       'process.step3.body': 'Iteraciones cortas, revisiones frecuentes y enfoque en la experiencia de uso.',
       'process.step4.title': 'Entrega y cuidado',
       'process.step4.body': 'Pruebas, ajustes finales y acompañamiento durante la puesta en producción.',
+      'projects.manual.inventory.title': 'Sistema de Gestión de Inventarios',
+      'projects.manual.inventory.body': 'Aplicación web para gestión de inventarios con backend en C# y base de datos SQL. Incluye formularios dinámicos y reportes.',
+      'projects.manual.personal.title': 'Portafolio Personal',
+      'projects.manual.personal.body': 'Sitio web responsivo desarrollado con HTML, CSS y JavaScript, optimizado para SEO y accesibilidad.',
+      'projects.linkText': 'Ver en GitHub',
+      'projects.profileLink': 'Ver perfil de GitHub',
+      'projects.placeholder.title': 'Cargando proyectos…',
+      'projects.placeholder.body': 'Un momento.',
+      'projects.noRepos': 'Por ahora no hay repos públicos para mostrar.',
+      'projects.loadError': 'No se pudieron cargar los proyectos desde GitHub en este momento.',
+      'contact.emailLabel': 'Correo',
+      'contact.linkedinLabel': 'LinkedIn',
+      'contact.xLabel': 'X',
       'education.title': 'Formación académica',
       'education.degree1.title': 'Bachiller Técnico en Electrónica',
       'education.degree1.description': 'Graduado con conocimientos en electrónica y sistemas técnicos.',
@@ -92,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'nav.projects': 'Projects',
       'nav.goals': 'Goals',
       'nav.contact': 'Contact',
+      'nav.logo': 'CV',
       'hero.subtitle': 'Professional portfolio',
       'hero.cta': 'Download résumé (PDF)',
       'services.title': 'Services / What I offer',
@@ -121,6 +136,19 @@ document.addEventListener('DOMContentLoaded', function () {
       'process.step3.body': 'Short iterations, frequent reviews and focus on the user experience.',
       'process.step4.title': 'Delivery and care',
       'process.step4.body': 'Testing, final polishing and support during launch.',
+      'projects.manual.inventory.title': 'Inventory Management System',
+      'projects.manual.inventory.body': 'Web application for inventory management with a C# backend and SQL database. Includes dynamic forms and reports.',
+      'projects.manual.personal.title': 'Personal Portfolio',
+      'projects.manual.personal.body': 'Responsive website developed with HTML, CSS and JavaScript, optimized for SEO and accessibility.',
+      'projects.linkText': 'View on GitHub',
+      'projects.profileLink': 'View GitHub profile',
+      'projects.placeholder.title': 'Loading projects…',
+      'projects.placeholder.body': 'One moment.',
+      'projects.noRepos': 'There are no public repositories to show yet.',
+      'projects.loadError': 'Could not load projects from GitHub right now.',
+      'contact.emailLabel': 'Email',
+      'contact.linkedinLabel': 'LinkedIn',
+      'contact.xLabel': 'X',
       'education.title': 'Education',
       'education.degree1.title': 'Technical High School Diploma in Electronics',
       'education.degree1.description': 'Graduated with knowledge in electronics and technical systems.',
@@ -300,8 +328,9 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(function (repos) {
         if (!Array.isArray(repos) || repos.length === 0) {
           if (projectsNote) {
+            var currentDict = translations[currentLang] || translations.es;
             projectsNote.hidden = false;
-            projectsNote.textContent = 'Por ahora no hay repos públicos para mostrar.';
+            projectsNote.textContent = currentDict['projects.noRepos'] || 'Por ahora no hay repos públicos para mostrar.';
           }
           projectsGrid.innerHTML = '';
           return;
@@ -352,8 +381,9 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .catch(function () {
         if (projectsNote) {
+          var currentDict = translations[currentLang] || translations.es;
           projectsNote.hidden = false;
-          projectsNote.textContent = 'No se pudieron cargar los proyectos desde GitHub en este momento.';
+          projectsNote.textContent = currentDict['projects.loadError'] || 'No se pudieron cargar los proyectos desde GitHub en este momento.';
         }
       });
   }

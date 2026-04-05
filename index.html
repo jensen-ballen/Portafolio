@@ -57,9 +57,7 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="#inicio" class="nav__logo">CV</a>
-            <ul class="nav__menu">
-                <li><a href="#perfil" data-i18n="nav.profile">Perfil</a></li>
+            <a href="#inicio" class="nav__logo" data-i18n="nav.logo">CV</a>
                 <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
                 <li><a href="#experiencia" data-i18n="nav.experience">Experiencia</a></li>
                 <li><a href="#proceso" data-i18n="nav.process">Proceso</a></li>
@@ -178,36 +176,36 @@
 
         <section id="proceso" class="section">
             <div class="container">
-                <h2>Cómo trabajo</h2>
-                <p class="section__lead">Un proceso simple y claro para que el trabajo fluya sin sorpresas.</p>
+                <h2 data-i18n="process.title">Cómo trabajo</h2>
+                <p class="section__lead" data-i18n="process.lead">Un proceso simple y claro para que el trabajo fluya sin sorpresas.</p>
 
                 <div class="pasos-grid">
                     <!-- Paso 1 -->
                     <div class="paso-card">
                         <div class="numero">1</div>
-                        <h3>Escuchar y entender</h3>
-                        <p>Revisión de contexto, objetivos y referencias para alinear expectativas.</p>
+                        <h3 data-i18n="process.step1.title">Escuchar y entender</h3>
+                        <p data-i18n="process.step1.body">Revisión de contexto, objetivos y referencias para alinear expectativas.</p>
                     </div>
 
                     <!-- Paso 2 -->
                     <div class="paso-card">
                         <div class="numero">2</div>
-                        <h3>Propuesta clara</h3>
-                        <p>Definición de alcance, tiempos y entregables priorizando lo esencial.</p>
+                        <h3 data-i18n="process.step2.title">Propuesta clara</h3>
+                        <p data-i18n="process.step2.body">Definición de alcance, tiempos y entregables priorizando lo esencial.</p>
                     </div>
 
                     <!-- Paso 3 -->
                     <div class="paso-card">
                         <div class="numero">3</div>
-                        <h3>Diseño y desarrollo</h3>
-                        <p>Iteraciones cortas, revisiones frecuentes y enfoque en la experiencia de uso.</p>
+                        <h3 data-i18n="process.step3.title">Diseño y desarrollo</h3>
+                        <p data-i18n="process.step3.body">Iteraciones cortas, revisiones frecuentes y enfoque en la experiencia de uso.</p>
                     </div>
 
                     <!-- Paso 4 -->
                     <div class="paso-card">
                         <div class="numero">4</div>
-                        <h3>Entrega y cuidado</h3>
-                        <p>Pruebas, ajustes finales y acompañamiento durante la puesta en producción.</p>
+                        <h3 data-i18n="process.step4.title">Entrega y cuidado</h3>
+                        <p data-i18n="process.step4.body">Pruebas, ajustes finales y acompañamiento durante la puesta en producción.</p>
                     </div>
                 </div>
             </div>
@@ -283,25 +281,25 @@
                 <div class="projects" data-github-user="jensen-ballen">
                     <div class="projects__manual">
                         <article class="project">
-                            <h3>Sistema de Gestión de Inventarios</h3>
-                            <p>Aplicación web para gestión de inventarios con backend en C# y base de datos SQL. Incluye formularios dinámicos y reportes.</p>
-                            <a href="https://github.com/jensen-ballen/inventario-app" target="_blank" rel="noopener">Ver en GitHub</a>
+                            <h3 data-i18n="projects.manual.inventory.title">Sistema de Gestión de Inventarios</h3>
+                            <p data-i18n="projects.manual.inventory.body">Aplicación web para gestión de inventarios con backend en C# y base de datos SQL. Incluye formularios dinámicos y reportes.</p>
+                            <a href="https://github.com/jensen-ballen/inventario-app" target="_blank" rel="noopener" data-i18n="projects.linkText">Ver en GitHub</a>
                         </article>
                         <article class="project">
-                            <h3>Portafolio Personal</h3>
-                            <p>Sitio web responsivo desarrollado con HTML, CSS y JavaScript, optimizado para SEO y accesibilidad.</p>
-                            <a href="https://github.com/jensen-ballen/portafolio" target="_blank" rel="noopener">Ver en GitHub</a>
+                            <h3 data-i18n="projects.manual.personal.title">Portafolio Personal</h3>
+                            <p data-i18n="projects.manual.personal.body">Sitio web responsivo desarrollado con HTML, CSS y JavaScript, optimizado para SEO y accesibilidad.</p>
+                            <a href="https://github.com/jensen-ballen/portafolio" target="_blank" rel="noopener" data-i18n="projects.linkText">Ver en GitHub</a>
                         </article>
                     </div>
                     <div class="projects__header">
-                        <a class="link-pill" id="githubProfileLink" href="#" target="_blank" rel="noreferrer noopener">
+                        <a class="link-pill" id="githubProfileLink" data-i18n="projects.profileLink" href="#" target="_blank" rel="noreferrer noopener">
                             Ver perfil de GitHub
                         </a>
                     </div>
                     <div class="projects__grid" id="projectsGrid" aria-live="polite">
                         <div class="project project--placeholder">
-                            <h3>Cargando proyectos…</h3>
-                            <p>Un momento.</p>
+                            <h3 data-i18n="projects.placeholder.title">Cargando proyectos…</h3>
+                            <p data-i18n="projects.placeholder.body">Un momento.</p>
                         </div>
                     </div>
                     <p class="projects__note" id="projectsNote" hidden></p>
@@ -318,15 +316,15 @@
 
                 <div class="contact">
                     <a class="contact__item" href="mailto:jensenbanguera@gmail.com">
-                        <span class="contact__label">Correo</span>
+                        <span class="contact__label" data-i18n="contact.emailLabel">Correo</span>
                         <span class="contact__value">jensenbanguera@gmail.com</span>
                     </a>
                     <a class="contact__item" href="https://www.linkedin.com/in/jensen-ballen-banguera-323bb3349/" target="_blank" rel="noreferrer noopener">
-                        <span class="contact__label">LinkedIn</span>
+                        <span class="contact__label" data-i18n="contact.linkedinLabel">LinkedIn</span>
                         <span class="contact__value">jensen-ballen-banguera</span>
                     </a>
                     <a class="contact__item" href="https://x.com/Jensenbanguera" target="_blank" rel="noreferrer noopener">
-                        <span class="contact__label">X</span>
+                        <span class="contact__label" data-i18n="contact.xLabel">X</span>
                         <span class="contact__value">@Jensenbanguera</span>
                     </a>
                 </div>
