@@ -86,10 +86,10 @@ body {
     justify-content: space-between;
     gap: 1.5rem;
     position: relative;
-    background: rgba(15, 15, 15, 0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    background: rgba(15, 15, 15, 0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
     border-radius: 0 0 var(--radius) var(--radius);
 }
 
@@ -100,66 +100,32 @@ body {
     text-decoration: none;
     letter-spacing: 0.02em;
     font-weight: 600;
-    transition: all var(--transition);
-    position: relative;
-}
-
-.nav__logo::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #667eea;
-    transition: width var(--transition);
+    transition: color var(--transition), transform var(--transition);
 }
 
 .nav__logo:hover {
-    color: #667eea;
-    transform: scale(1.05);
-}
-
-.nav__logo:hover::after {
-    width: 100%;
+    color: #7dd3fc;
 }
 
 .nav__menu {
     display: flex;
     list-style: none;
-    gap: 2.5rem;
+    gap: 2rem;
     margin: 0;
     padding: 0;
 }
 
 .nav__menu a {
-    color: var(--color-text-muted);
+    color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
-    transition: all var(--transition);
-    position: relative;
+    transition: color var(--transition);
     padding: 0.5rem 0;
 }
 
-.nav__menu a::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    transition: width var(--transition);
-}
-
 .nav__menu a:hover {
-    color: #667eea;
-    transform: translateY(-2px);
-}
-
-.nav__menu a:hover::before {
-    width: 100%;
+    color: #7dd3fc;
 }
  
 .nav__actions {
@@ -188,7 +154,7 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00bcd4 0%, #4dd0e1 100%);
     opacity: 0;
     transition: opacity var(--transition);
     z-index: -1;
