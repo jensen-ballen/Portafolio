@@ -86,7 +86,7 @@ body {
     justify-content: space-between;
     gap: 1.5rem;
     position: relative;
-    background: linear-gradient(135deg, var(--header-bg) 0%, rgba(30, 30, 30, 0.95) 100%);
+    background: rgba(15, 15, 15, 0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--color-border);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
@@ -111,12 +111,12 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--color-accent);
+    background: #667eea;
     transition: width var(--transition);
 }
 
 .nav__logo:hover {
-    color: var(--color-accent-hover);
+    color: #667eea;
     transform: scale(1.05);
 }
 
@@ -149,12 +149,12 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
     transition: width var(--transition);
 }
 
 .nav__menu a:hover {
-    color: var(--color-accent);
+    color: #667eea;
     transform: translateY(-2px);
 }
 
@@ -188,10 +188,11 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     opacity: 0;
     transition: opacity var(--transition);
     z-index: -1;
+    border-radius: inherit;
 }
 
 .icon-btn:hover {
@@ -794,7 +795,7 @@ body {
         top: calc(100% + 1rem);
         left: 1.5rem;
         right: 1.5rem;
-        background: linear-gradient(135deg, var(--color-surface) 0%, rgba(30, 30, 30, 0.98) 100%);
+        background: linear-gradient(135deg, rgba(40, 40, 40, 0.98) 0%, rgba(60, 60, 60, 0.95) 100%);
         backdrop-filter: blur(20px);
         border: 1px solid var(--color-border);
         border-radius: var(--radius);
