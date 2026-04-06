@@ -816,6 +816,19 @@ body {
     }
 }
 
+@media (hover: none) {
+    .icon-btn:hover {
+        border-color: var(--color-border);
+        color: var(--color-text-muted);
+        transform: none;
+        box-shadow: none;
+    }
+
+    .icon-btn:hover::before {
+        opacity: 0;
+    }
+}
+
 /* Animations */
 @keyframes slideDown {
     from {

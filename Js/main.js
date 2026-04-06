@@ -293,25 +293,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function setNavOpen(open) {
     if (!navMenu || !navToggle) return;
-    if (open) {
-      body.classList.add('nav-open');
-      navToggle.setAttribute('aria-label', 'Cerrar menú');
-      navToggle.setAttribute('title', 'Cerrar menú');
-      var iconSpan = navToggle.querySelector('.icon-btn__icon');
-      if (iconSpan) iconSpan.textContent = '✕';
-    } else {
-      body.classList.remove('nav-open');
-      navToggle.setAttribute('aria-label', 'Abrir menú');
-      navToggle.setAttribute('title', 'Abrir menú');
-      var iconSpan2 = navToggle.querySelector('.icon-btn__icon');
-      if (iconSpan2) iconSpan2.textContent = '☰';
-    }
+
+    const icon = navToggle.querySelector('.icon-btn__icon');
+
+    body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open);
+    navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    navToggle.setAttribute('title',       open ? 'Cerrar menú' : 'Abrir menú');
+    if (icon) icon.textContent = open ? '✕' : '☰';
   }
 
   if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function () {
-      var open = body.classList.contains('nav-open');
-      setNavOpen(!open);
+    // Click en el botón
+    navToggle.addEventListener('click', () => {
+      setNavOpen(!body.classList.contains('nav-open'));
+    });
+
+    // Cierra al hacer click en un link del menú
+    navMenu.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setNavOpen(false);
+    });
+
+    // Cierra al hacer click fuera del nav
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav') && body.classList.contains('nav-open')) {
+        setNavOpen(false);
+      }
+    });
+
+    // Cierra con la tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && body.classList.contains('nav-open')) {
+        setNavOpen(false);
+        navToggle.focus(); // devuelve el foco al botón (accesibilidad)
+      }
     });
   }
 
