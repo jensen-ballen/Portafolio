@@ -78,7 +78,7 @@ body {
 }
 
 .nav {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 1rem 1.5rem;
     display: flex;
@@ -86,7 +86,6 @@ body {
     justify-content: space-between;
     gap: 1.5rem;
     position: relative;
-    background: rgba(15, 15, 15, 0.92);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
@@ -179,21 +178,6 @@ body {
 
 .icon-btn:hover .icon-btn__icon {
     transform: rotate(10deg);
-}
-    background: var(--color-surface);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: transform 0.15s ease, border-color var(--transition), background var(--transition), color var(--transition);
-}
-
-.icon-btn:hover {
-    transform: translateY(-1px);
-    border-color: rgba(201, 162, 39, 0.35);
-}
-
-.icon-btn__icon {
-    font-size: 1.05rem;
-    line-height: 1;
 }
 
 .icon-btn--menu {
@@ -768,8 +752,6 @@ body {
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         padding: 1.5rem;
         animation: slideDown 0.3s ease-out;
-    }
-        padding: 0.5rem;
     }
 
     body.nav-open .nav__menu a {
