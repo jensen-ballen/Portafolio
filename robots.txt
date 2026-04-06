@@ -1,4 +1,5 @@
 User-agent: *
+Disallow:
 Allow: /
 
 # apunta al sitemap para facilitar el rastreo
