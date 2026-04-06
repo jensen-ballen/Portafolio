@@ -1,0 +1,23 @@
+{
+  "name": "Jensen Ballen Banguera | jensenadsotarde",
+  "short_name": "jensendaso",
+  "description": "Portafolio profesional y hoja de vida de Jensen Ballen Banguera (jensenadsotarde, jensendaso).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
